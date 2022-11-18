@@ -1,0 +1,71 @@
+<!--
+  Copyright 2013 The Android Open Source Project
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+  -->
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:ignore="AppCompatResource">
+    <item android:id="@+id/menu_show_list"
+          android:showAsAction="always"
+          android:title="@string/show_list" />
+    <item android:id="@+id/menu_show_grid"
+          android:showAsAction="always"
+          android:title="@string/show_grid" />
+    <item android:id="@+id/menu_show_scroll"
+          android:showAsAction="ifRoom"
+          android:title="@string/show_scroll" />
+    <item android:id="@+id/menu_pull_refresh"
+        android:showAsAction="ifRoom"
+        android:title="@string/pull_to_refresh" />
+    <item android:id="@+id/menu_horizontal_recyclerview"
+        android:showAsAction="ifRoom"
+        android:title="@string/horizontal_recyclerview" />
+    <item android:id="@+id/menu_webview"
+        android:showAsAction="ifRoom"
+        android:title="@string/webview" />
+    <item android:id="@+id/menu_pull_refresh_scrollview"
+        android:showAsAction="ifRoom"
+        android:title="@string/pull_to_refresh_scrollview" />
+    <item android:id="@+id/menu_pull_refresh_scrollview2"
+        android:showAsAction="ifRoom"
+        android:title="@string/pull_to_refresh_scrollview2" />
+    <item android:id="@+id/menu_refresh_scrollview"
+        android:showAsAction="ifRoom"
+        android:title="@string/refresh_scrollview" />
+    <item android:id="@+id/menu_horizontal_scrollview"
+        android:showAsAction="ifRoom"
+        android:title="@string/horizontal_scrollview" />
+    <item android:id="@+id/menu_pull_refresh_recyclerview"
+        android:showAsAction="ifRoom"
+        android:title="@string/pull_to_refresh_recyclerview" />
+    <item android:id="@+id/menu_show_list2"
+        android:showAsAction="ifRoom"
+        android:title="@string/show_list2" />
+    <item android:id="@+id/menu_spring_recyclerview"
+        android:showAsAction="ifRoom"
+        android:title="@string/spring_recyclerview" />
+    <item android:id="@+id/menu_show_expand_list"
+        android:showAsAction="ifRoom"
+        android:title="@string/show_expanded_list" />
+    <item android:id="@+id/menu_settings"
+        android:showAsAction="ifRoom"
+        android:title="@string/settings" />
+    <item android:id="@+id/menu_nestscroll"
+        android:showAsAction="ifRoom"
+        android:title="@string/nest_scroll" />
+    <item android:id="@+id/menu_anim"
+        android:title="@string/anim_remove"
+        android:showAsAction="ifRoom" />
+</menu>

@@ -1,0 +1,91 @@
+<resources>
+    <string name="app_name">EdgeEffect</string>
+    <string name="element_text">Element</string>
+    <string name="show_list">List</string>
+    <string name="show_grid">Grid</string>
+    <string name="show_scroll">Scroll</string>
+    <string name="pull_to_refresh">PullToRefresh</string>
+    <string name="webview">Web</string>
+    <string name="horizontal_recyclerview">Horizontal Recyclerview</string>
+    <string name="pull_to_refresh_scrollview">PullToRefreshScrollView</string>
+    <string name="pull_to_refresh_scrollview2">PullToRefreshScrollView2</string>
+    <string name="refresh_scrollview">RefreshScrollView</string>
+    <string name="spring_recyclerview">SpringRecyclerView</string>
+    <string name="horizontal_scrollview">Horizontal Scrollview</string>
+    <string name="settings">Settings</string>
+    <string name="pull_to_refresh_recyclerview">PullToRefreshRecyclerView</string>
+    <string name="show_list2">List2</string>
+    <string name="show_expanded_list">ExpandableList</string>
+    <string name="anim_add">add</string>
+    <string name="anim_remove">remove</string>
+    <string name="nest_scroll">NestScroll</string>
+    <string name="intro_message">
+        <![CDATA[
+
+
+                Demonstration of using RecyclerView with a LinearLayoutManager and GridLayoutManager
+                to create a vertical list. Tap \"SHOW LOG\" to view elements as they are bound to
+                their ViewHolder. The log also displays elements that you tap.
+
+                Demonstration of using RecyclerView with a LinearLayoutManager and GridLayoutManager
+                to create a vertical list. Tap \"SHOW LOG\" to view elements as they are bound to
+                their ViewHolder. The log also displays elements that you tap.
+
+                Demonstration of using RecyclerView with a LinearLayoutManager and GridLayoutManager
+                to create a vertical list. Tap \"SHOW LOG\" to view elements as they are bound to
+                their ViewHolder. The log also displays elements that you tap.
+
+        ]]>
+    </string>
+
+    <!--App title-->
+    <string name="title">Preferences Demo</string>
+    <!--Fragment titles-->
+    <string name="preferences">Preferences</string>
+    <string name="leanback_preferences">Leanback Preferences</string>
+    <string name="car_preferences">Car Preferences</string>
+    <!--This section is for basic attributes -->
+    <string name="basic_preferences">Basic attributes</string>
+    <string name="title_basic_preference">Preference</string>
+    <string name="summary_basic_preference">Simple preference with no special attributes</string>
+    <string name="title_stylish_preference"><b>Very</b> <i>stylish</i> <u>preference</u></string>
+    <string name="summary_stylish_preference">Define style tags such as &lt;b&gt; in a string resource to customize a preference\'s text</string>
+    <string name="title_icon_preference">Icon preference</string>
+    <string name="summary_icon_preference">Define a drawable to display it at the start of the preference</string>
+    <string name="title_single_line_title_preference">Single line title preference - no matter how long the title is it will never wrap to multiple lines</string>
+    <string name="summary_single_line_title_preference">This title will be ellipsized instead of wrapping to another line</string>
+    <!--This section is for preferences that contain a widget in their layout -->
+    <string name="widgets">Widgets</string>
+    <string name="title_checkbox_preference">Checkbox preference</string>
+    <string name="summary_checkbox_preference">Tap anywhere in this preference to toggle state</string>
+    <string name="title_switch_preference">Switch preference</string>
+    <string name="summary_switch_preference">Tap anywhere in this preference to toggle state</string>
+    <string name="title_dropdown_preference">Dropdown preference</string>
+    <string name="title_seekbar_preference">Seekbar preference</string>
+    <!--This section is for preferences that launch a dialog to edit the preference -->
+    <string name="dialogs">Dialogs</string>
+    <string name="title_edittext_preference">EditText preference</string>
+    <string name="dialog_title_edittext_preference">This title can be changed!</string>
+    <string name="title_list_preference">List preference</string>
+    <string name="dialog_title_list_preference">Choose one option!</string>
+    <string name="title_multi_list_preference">Multi-select list preference</string>
+    <string name="summary_multi_list_preference">Shows a dialog with multiple choice options</string>
+    <string name="dialog_title_multi_list_preference">Choose some options!</string>
+    <!--This section is for advanced attributes-->
+    <string name="advanced_attributes">Advanced attributes</string>
+    <string name="title_expandable_preference">Expandable preference group</string>
+    <string name="summary_expandable_preference">This group shows one item and collapses the rest into the advanced button below</string>
+    <string name="title_intent_preference">Intent preference</string>
+    <string name="summary_intent_preference">Launches an intent when pressed</string>
+    <string name="title_parent_preference">Parent preference</string>
+    <string name="summary_parent_preference">Toggling this preference will change the enabled state of the preference below</string>
+    <string name="title_child_preference">Child preference</string>
+    <string name="summary_child_preference">The enabled state of this preference is controlled by the preference above</string>
+    <string name="title_toggle_summary_preference">Variable summary preference</string>
+    <string name="summary_on_toggle_summary_preference">On! :) - the summary of this preference changes depending on its state</string>
+    <string name="summary_off_toggle_summary_preference">Off! :( - the summary of this preference changes depending on its state</string>
+    <string name="title_copyable_preference">Copyable preference</string>
+    <string name="summary_copyable_preference">Long press on this preference to copy its summary</string>
+    <string name="summary_add_preference">Click to Add</string>
+    <string name="summary_remove_preference">Click to remove</string>
+</resources>
