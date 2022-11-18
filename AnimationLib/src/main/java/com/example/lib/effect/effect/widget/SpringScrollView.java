@@ -18,7 +18,7 @@ import androidx.annotation.Px;
 import java.lang.reflect.Field;
 
 public class SpringScrollView extends ScrollView {
-    private SpringRelativeLayout.SEdgeEffectFactory mEdgeEffectFactory;
+    private SEdgeEffectFactory mEdgeEffectFactory;
     private EdgeEffect mTopGlow;
     private EdgeEffect mBottomGlow;
     private int mScrollState;
@@ -79,7 +79,7 @@ public class SpringScrollView extends ScrollView {
     }
 
 
-    public void setEdgeEffectFactory(@NonNull SpringRelativeLayout.SEdgeEffectFactory edgeEffectFactory) {
+    public void setEdgeEffectFactory(@NonNull SEdgeEffectFactory edgeEffectFactory) {
         mEdgeEffectFactory = edgeEffectFactory;
         invalidateGlows();
     }
@@ -688,25 +688,6 @@ public class SpringScrollView extends ScrollView {
             }
         }
 
-        /*
-        if (t == 0 && t < oldt) {
-            if (!mGlowing) {
-                pullGlows(mLastX, (float) 0, mLastY, mLastYVel / 20);
-                //ensureTopGlow();
-                if (mTopGlow != null) {
-                    mTopGlow.onAbsorb((int) (mLastYVel / 20));
-                }
-            }
-        } else if (t == mScrollRangeY && t > oldt){
-            if (!mGlowing) {
-                pullGlows(mLastX, (float) 0, mLastY, mLastYVel / 20);
-                //ensureBottomGlow();
-                if (mBottomGlow != null) {
-                    mBottomGlow.onAbsorb((int) (mLastYVel / 20));
-                }
-            }
-        }
-         */
         //Log.d("SpringNestScrollView", "onScrollChanged " + t + " mGlowingTop " + mGlowingTop + " " + canScrollVertically(-1));
         if (mGlowingTop) {
             if (canScrollVertically(-1) && t > oldt) {
@@ -727,9 +708,9 @@ public class SpringScrollView extends ScrollView {
             if (!canScrollVertically(-1) && t < oldt) {
                 float yvel = mLastYVel;
                 if (yvel >= 0) {
-                    /**
-                     * overscroll-by-fling happened before MotionEvent.ACTION_UP
-                     */
+
+                    // overscroll-by-fling happened before MotionEvent.ACTION_UP
+
                     yvel = computeVelocity();
                 }
                 Log.d("SpringScrollView", "ready go " + yvel + " " + mLastY + " " + mLastYVel);
@@ -746,9 +727,9 @@ public class SpringScrollView extends ScrollView {
             if (!canScrollVertically(1) && t > oldt) {
                 float yvel = mLastYVel;
                 if (yvel <= 0) {
-                    /**
-                     * overscroll-by-fling happened before MotionEvent.ACTION_UP
-                     */
+
+                    // overscroll-by-fling happened before MotionEvent.ACTION_UP
+
                     yvel = computeVelocity();
                 }
                 Log.d("SpringScrollView", "ready go bottom " + yvel + " " + mLastY + " " + mLastYVel);

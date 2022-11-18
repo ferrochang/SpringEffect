@@ -43,7 +43,6 @@ public class SpringRelativeLayout extends RelativeLayout {
     private static final float STIFFNESS = (0.3f * STIFFNESS_MEDIUM + 0.7f * STIFFNESS_LOW);
     private static final float DAMPING_RATIO = DAMPING_RATIO_MEDIUM_BOUNCY;
     private static final float VELOCITY_MULTIPLIER = 0.3f;
-    private boolean mReadyToGo = true;
     private float mVelocity = VELOCITY_MULTIPLIER;
     private float mStiff = STIFFNESS;
 
@@ -65,7 +64,7 @@ public class SpringRelativeLayout extends RelativeLayout {
     private final SpringAnimation mSpring;
 
     private float mDampedScrollShift = 0;
-    private SpringEdgeEffect mActiveEdge;
+    //private SpringEdgeEffect mActiveEdge;
     private boolean mHorizontal = false;
 
     private float mDistance = 0;
@@ -130,12 +129,15 @@ public class SpringRelativeLayout extends RelativeLayout {
         return super.drawChild(canvas, child, drawingTime);
     }
 
+    /*
     private void setActiveEdge(SpringEdgeEffect edge) {
         if (mActiveEdge != edge && mActiveEdge != null) {
             //mActiveEdge.mDistance = 0; //FIXME
         }
         mActiveEdge = edge;
     }
+
+     */
 
     protected void setDampedScrollShift(float shift) {
         if (shift != mDampedScrollShift) {
@@ -226,7 +228,7 @@ public class SpringRelativeLayout extends RelativeLayout {
                 mSpring.cancel();
             }
             mPullCount++;
-            setActiveEdge(this);
+            //setActiveEdge(this);
             mDistance += deltaDistance * (mVelocityMultiplier / 3f);
             if (mHorizontal)
                 setDampedScrollShift(mDistance * getWidth());
@@ -242,8 +244,6 @@ public class SpringRelativeLayout extends RelativeLayout {
             }
             mDistance = 0;
             mPullCount = 0;
-            if (mDampedScrollShift != .0)
-                mReadyToGo = false;
             finishScrollWithVelocity(0);
             mReleased = true;
         }
@@ -294,6 +294,7 @@ public class SpringRelativeLayout extends RelativeLayout {
         return new ViewEdgeEffectFactory();
     }
 
+    /*
     public static class SEdgeEffectFactory {
         public static final int DIRECTION_LEFT = 0;
         public static final int DIRECTION_TOP = 1;
@@ -312,6 +313,8 @@ public class SpringRelativeLayout extends RelativeLayout {
         public @interface EdgeDirection {
         }
     }
+
+     */
 
     /**
      * Listener to know the EdgeEffect Animation is finished.

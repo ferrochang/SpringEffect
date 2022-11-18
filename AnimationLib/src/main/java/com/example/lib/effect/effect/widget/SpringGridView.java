@@ -62,7 +62,7 @@ public class SpringGridView extends GridView implements ISprintView {
         return super.onTouchEvent(ev);
     }
 
-    public void setEdgeEffectFactory(SpringRelativeLayout.SEdgeEffectFactory edgeEffectFactory) {
+    public void setEdgeEffectFactory(SEdgeEffectFactory edgeEffectFactory) {
         mEffectHelper.setEdgeEffectFactory(edgeEffectFactory);
     }
 

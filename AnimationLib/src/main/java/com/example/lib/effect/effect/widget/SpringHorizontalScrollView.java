@@ -15,7 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.Px;
 
 public class SpringHorizontalScrollView extends HorizontalScrollView {
-    private SpringRelativeLayout.SEdgeEffectFactory mEdgeEffectFactory;
+    private SEdgeEffectFactory mEdgeEffectFactory;
     private EdgeEffect mLeftGlow;
     private EdgeEffect mRightGlow;
     private int mScrollState;
@@ -329,7 +329,7 @@ public class SpringHorizontalScrollView extends HorizontalScrollView {
         return super.onTouchEvent(ev);
     }
 
-    public void setEdgeEffectFactory(@NonNull SpringRelativeLayout.SEdgeEffectFactory edgeEffectFactory) {
+    public void setEdgeEffectFactory(@NonNull SEdgeEffectFactory edgeEffectFactory) {
         mEdgeEffectFactory = edgeEffectFactory;
         invalidateGlows();
     }
@@ -487,7 +487,7 @@ public class SpringHorizontalScrollView extends HorizontalScrollView {
         }
 
         if (mLeftGlow == null) {
-            mLeftGlow = mEdgeEffectFactory.createEdgeEffect(this, SpringRelativeLayout.SEdgeEffectFactory.DIRECTION_LEFT);
+            mLeftGlow = mEdgeEffectFactory.createEdgeEffect(this, SEdgeEffectFactory.DIRECTION_LEFT);
             if (getClipToPadding()) {
                 mLeftGlow.setSize(getMeasuredWidth() - getPaddingLeft() - getPaddingRight(), getMeasuredHeight() - getPaddingTop() - getPaddingBottom());
             } else {
@@ -503,7 +503,7 @@ public class SpringHorizontalScrollView extends HorizontalScrollView {
         }
 
         if (mRightGlow == null) {
-            mRightGlow = mEdgeEffectFactory.createEdgeEffect(this, SpringRelativeLayout.SEdgeEffectFactory.DIRECTION_RIGHT);
+            mRightGlow = mEdgeEffectFactory.createEdgeEffect(this, SEdgeEffectFactory.DIRECTION_RIGHT);
             if (getClipToPadding()) {
                 mRightGlow.setSize(getMeasuredWidth() - getPaddingLeft() - getPaddingRight(), getMeasuredHeight() - getPaddingTop() - getPaddingBottom());
             } else {

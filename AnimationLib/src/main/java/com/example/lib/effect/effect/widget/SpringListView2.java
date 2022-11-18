@@ -682,48 +682,66 @@ public class SpringListView2 extends ListView {
         }
     }
 
-    public static class SEdgeEffectFactory {
-        public static final int DIRECTION_LEFT = 0;
-        public static final int DIRECTION_TOP = 1;
-        public static final int DIRECTION_RIGHT = 2;
-        public static final int DIRECTION_BOTTOM = 3;
-
-        public SEdgeEffectFactory() {
-        }
-
-        @NonNull
-        protected EdgeEffect createEdgeEffect(@NonNull View view, int direction) {
-            return new EdgeEffect(view.getContext());
-        }
-
-        @Retention(RetentionPolicy.SOURCE)
-        public @interface EdgeDirection {
-        }
-    }
-
     public ViewEdgeEffectFactory createViewEdgeEffectFactory() {
         return new ViewEdgeEffectFactory();
     }
 
+    private class SpringPro implements SpringEdgeEffect.ISpringPro {
+
+        @Override
+        public void finishScrollWithVelocity(float velocity) {
+            SpringListView2.this.finishScrollWithVelocity(velocity);
+        }
+
+        @Override
+        public float getDistance() {
+            return mDistance;
+        }
+
+        @Override
+        public void setDistance(float f) {
+            mDistance = f;
+        }
+
+        @Override
+        public void setDampedScrollShift(float shift) {
+            mDampedScrollShift = shift;
+        }
+
+        @Override
+        public int getPullCount() {
+            return mPullCount;
+        }
+
+        @Override
+        public void setPullCount(int x) {
+            mPullCount = x;
+        }
+    }
+
+    private SpringPro mSpringPro = new SpringPro();
     private class ViewEdgeEffectFactory extends SEdgeEffectFactory {
         @NonNull @Override
         protected EdgeEffect createEdgeEffect(View view, int direction) {
             switch (direction) {
                 case DIRECTION_TOP:
                 case DIRECTION_LEFT:
-                    return new SpringEdgeEffect(getContext(), +VELOCITY_MULTIPLIER);
+                    return new SpringEdgeEffect(getContext(), +VELOCITY_MULTIPLIER, mSpring, view.getHeight(), mSpringPro);
                 case DIRECTION_BOTTOM:
                 case DIRECTION_RIGHT:
-                    return new SpringEdgeEffect(getContext(), -VELOCITY_MULTIPLIER);
+                    return new SpringEdgeEffect(getContext(), -VELOCITY_MULTIPLIER, mSpring, view.getHeight(), mSpringPro);
             }
             return super.createEdgeEffect(view, direction);
         }
     }
 
+
+    /*
     private class SpringEdgeEffect extends EdgeEffect {
 
         private final float mVelocityMultiplier;
         private boolean mReleased = true;
+        private ISpringPro springPro;
 
         public SpringEdgeEffect(Context context, float velocityMultiplier) {
             super(context);
@@ -748,7 +766,7 @@ public class SpringListView2 extends ListView {
                 mSpring.cancel();
             }
             mPullCount++;
-            setActiveEdge(this);
+            //setActiveEdge(this);
             //android.util.Log.d("SpringRelativeLayout", " displacement " + displacement);
             //if (displacement < .4f) {
             mDistance += deltaDistance * (mVelocityMultiplier / 3f);
@@ -772,6 +790,8 @@ public class SpringListView2 extends ListView {
             mReleased = true;
         }
     }
+
+     */
 
     /**
      * Return the current scrolling state.

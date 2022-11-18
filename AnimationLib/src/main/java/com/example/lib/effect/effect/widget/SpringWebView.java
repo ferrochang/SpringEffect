@@ -14,7 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.Px;
 
 public class SpringWebView extends WebView {
-    private SpringRelativeLayout.SEdgeEffectFactory mEdgeEffectFactory;
+    private SEdgeEffectFactory mEdgeEffectFactory;
     private EdgeEffect mTopGlow;
     private EdgeEffect mBottomGlow;
     private int mScrollState;
@@ -71,7 +71,7 @@ public class SpringWebView extends WebView {
         mScrollConsumed = new int[2];
     }
 
-    public void setEdgeEffectFactory(SpringRelativeLayout.SEdgeEffectFactory edgeEffectFactory) {
+    public void setEdgeEffectFactory(SEdgeEffectFactory edgeEffectFactory) {
         mEdgeEffectFactory = edgeEffectFactory;
         invalidateGlows();
     }

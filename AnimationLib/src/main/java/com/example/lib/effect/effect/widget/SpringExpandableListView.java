@@ -58,7 +58,7 @@ public class SpringExpandableListView extends ExpandableListView implements ISpr
         return super.onTouchEvent(ev);
     }
 
-    public void setEdgeEffectFactory(@NonNull SpringRelativeLayout.SEdgeEffectFactory edgeEffectFactory) {
+    public void setEdgeEffectFactory(@NonNull SEdgeEffectFactory edgeEffectFactory) {
         mEffectHelper.setEdgeEffectFactory(edgeEffectFactory);
     }
 

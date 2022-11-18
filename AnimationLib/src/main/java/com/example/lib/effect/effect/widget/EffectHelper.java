@@ -28,7 +28,7 @@ public class EffectHelper {
     private AbsListView absListView;
     private ViewGroup viewGroup;
     private ISprintView sprintView;
-    private SpringRelativeLayout.SEdgeEffectFactory mEdgeEffectFactory;
+    private SEdgeEffectFactory mEdgeEffectFactory;
     private EdgeEffect mTopGlow;
     private EdgeEffect mBottomGlow;
     int[] mScrollStepConsumed;
@@ -629,7 +629,7 @@ public class EffectHelper {
         return l != mOnScrollListenerWrapper;
     }
 
-    public void setEdgeEffectFactory(@NonNull SpringRelativeLayout.SEdgeEffectFactory edgeEffectFactory) {
+    public void setEdgeEffectFactory(@NonNull SEdgeEffectFactory edgeEffectFactory) {
         mEdgeEffectFactory = edgeEffectFactory;
         invalidateGlows();
     }

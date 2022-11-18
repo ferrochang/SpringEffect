@@ -60,7 +60,7 @@ public class SpringListView extends ListView implements ISprintView {
         return super.onTouchEvent(ev);
     }
 
-    public void setEdgeEffectFactory(@NonNull SpringRelativeLayout.SEdgeEffectFactory edgeEffectFactory) {
+    public void setEdgeEffectFactory(@NonNull SEdgeEffectFactory edgeEffectFactory) {
         //mEdgeEffectFactory = edgeEffectFactory;
         //invalidateGlows();
         mEffectHelper.setEdgeEffectFactory(edgeEffectFactory);
