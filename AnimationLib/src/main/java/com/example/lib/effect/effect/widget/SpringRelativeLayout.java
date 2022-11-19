@@ -294,28 +294,6 @@ public class SpringRelativeLayout extends RelativeLayout {
         return new ViewEdgeEffectFactory();
     }
 
-    /*
-    public static class SEdgeEffectFactory {
-        public static final int DIRECTION_LEFT = 0;
-        public static final int DIRECTION_TOP = 1;
-        public static final int DIRECTION_RIGHT = 2;
-        public static final int DIRECTION_BOTTOM = 3;
-
-        public SEdgeEffectFactory() {
-        }
-
-        @NonNull
-        protected EdgeEffect createEdgeEffect(@NonNull View view, int direction) {
-            return new EdgeEffect(view.getContext());
-        }
-
-        @Retention(RetentionPolicy.SOURCE)
-        public @interface EdgeDirection {
-        }
-    }
-
-     */
-
     /**
      * Listener to know the EdgeEffect Animation is finished.
      * @param l the given Listener
