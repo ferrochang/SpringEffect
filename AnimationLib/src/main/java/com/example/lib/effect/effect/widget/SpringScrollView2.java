@@ -795,64 +795,53 @@ public class SpringScrollView2 extends ScrollView {
         finishScrollWithVelocity(0);
     }
 
+    private class SpringPro implements SpringEdgeEffect.ISpringPro {
+
+        @Override
+        public void finishScrollWithVelocity(float velocity) {
+            finishScrollWithVelocity(velocity);
+        }
+
+        @Override
+        public float getDistance() {
+            return mDistance;
+        }
+
+        @Override
+        public void setDistance(float f) {
+            mDistance = f;
+        }
+
+        @Override
+        public void setDampedScrollShift(float shift) {
+            mDampedScrollShift = shift;
+        }
+
+        @Override
+        public int getPullCount() {
+            return mPullCount;
+        }
+
+        @Override
+        public void setPullCount(int x) {
+            mPullCount = x;
+        }
+    }
+
+    private SpringPro mSpringPro = new SpringPro();
+
     private class ViewEdgeEffectFactory extends SEdgeEffectFactory {
         @NonNull @Override
         protected EdgeEffect createEdgeEffect(View view, int direction) {
             switch (direction) {
                 case DIRECTION_TOP:
                 case DIRECTION_LEFT:
-                    return new SpringEdgeEffect(getContext(), +VELOCITY_MULTIPLIER);
+                    return new SpringEdgeEffect(getContext(), +VELOCITY_MULTIPLIER, mSpring, view.getHeight(), mSpringPro);
                 case DIRECTION_BOTTOM:
                 case DIRECTION_RIGHT:
-                    return new SpringEdgeEffect(getContext(), -VELOCITY_MULTIPLIER);
+                    return new SpringEdgeEffect(getContext(), -VELOCITY_MULTIPLIER, mSpring, view.getHeight(), mSpringPro);
             }
             return super.createEdgeEffect(view, direction);
-        }
-    }
-
-    private class SpringEdgeEffect extends EdgeEffect {
-
-        private final float mVelocityMultiplier;
-
-        private boolean mReleased = true;
-
-        public SpringEdgeEffect(Context context, float velocityMultiplier) {
-            super(context);
-            mVelocityMultiplier = velocityMultiplier;
-        }
-
-        @Override
-        public boolean draw(Canvas canvas) {
-            return false;
-        }
-
-        @Override
-        public void onAbsorb(int velocity) {
-            finishScrollWithVelocity(velocity * mVelocityMultiplier);
-            mDistance = 0;
-        }
-
-        @Override
-        public void onPull(float deltaDistance, float displacement) {
-            if (mSpring.isRunning()) {
-                mSpring.cancel();
-            }
-            mPullCount++;
-            setActiveEdge(this);
-            mDistance += deltaDistance * (mVelocityMultiplier / 3f);
-            setDampedScrollShift(mDistance * getHeight());
-            mReleased = false;
-        }
-
-        @Override
-        public void onRelease() {
-            if (mReleased) {
-                return;
-            }
-            mDistance = 0;
-            mPullCount = 0;
-            finishScrollWithVelocity(0);
-            mReleased = true;
         }
     }
 

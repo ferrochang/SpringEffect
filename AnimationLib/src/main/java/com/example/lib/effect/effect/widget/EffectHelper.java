@@ -6,9 +6,12 @@ import android.view.VelocityTracker;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.AbsListView;
 import android.widget.Adapter;
 import android.widget.EdgeEffect;
+import android.widget.HorizontalScrollView;
+import android.widget.ScrollView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -26,6 +29,7 @@ public class EffectHelper {
     private int[] mNestedOffsets;
     private float mLastX, mLastY;
     private AbsListView absListView;
+    private int viewGroupType = 0;
     private ViewGroup viewGroup;
     private ISprintView sprintView;
     private SEdgeEffectFactory mEdgeEffectFactory;
@@ -37,6 +41,8 @@ public class EffectHelper {
 
     private SpringRelativeLayout mSpringLayout = null;
     private boolean mGlowing = false;
+    private boolean mGlowingTop = false;
+    private boolean mGlowingBottom = false;
 
     float mPullGrowTop = 0.1f;
     float mPullGrowBottom = 0.9f;
@@ -54,6 +60,13 @@ public class EffectHelper {
         viewGroup = vg;
         if (vg instanceof AbsListView)
             absListView = (AbsListView) vg;
+        else if (vg instanceof ScrollView)
+            viewGroupType = 1;
+        else if (vg instanceof HorizontalScrollView)
+            viewGroupType = 2;
+        else if (vg instanceof WebView)
+            viewGroupType = 3;
+
         if (vg instanceof ISprintView)
             sprintView = (ISprintView) vg;
 
@@ -64,7 +77,9 @@ public class EffectHelper {
         mScrollOffset = new int[2];
         mNestedOffsets = new int[2];
         mScrollConsumed = new int[2];
-        setOnScrollListener(mOnScrollListenerWrapper);
+        if (absListView != null) {
+            setOnScrollListener(mOnScrollListenerWrapper);
+        }
         //mMinimumVelocity = vc.getScaledMinimumFlingVelocity();
     }
     public int onInterceptTouchEvent(MotionEvent ev) {
@@ -281,6 +296,313 @@ public class EffectHelper {
         return 0;
     }
 
+    public int onInterceptTouchEvent2(MotionEvent ev) {
+        if (mVelocityTracker == null) {
+            mVelocityTracker = VelocityTracker.obtain();
+        }
+        mVelocityTracker.addMovement(ev);
+        int action = ev.getActionMasked();
+        int actionIndex = ev.getActionIndex();
+        MotionEvent vtev = MotionEvent.obtain(ev);
+
+        //Log.d("SpringScrollView", "onInterceptTouchEvent  " + action);
+        switch(action) {
+            case MotionEvent.ACTION_DOWN:
+                mScrollPointerId = ev.getPointerId(0);
+                mInitialTouchY = mLastTouchY = (int)(ev.getY() + 0.5F);
+
+                if (mScrollState == 2) {
+                    viewGroup.getParent().requestDisallowInterceptTouchEvent(true);
+                    setScrollState(1);
+                }
+
+                mNestedOffsets[0] = mNestedOffsets[1] = 0;
+                int nestedScrollAxis = 0;
+                //nestedScrollAxis |= 2;
+                //startNestedScroll(nestedScrollAxis);
+                //mRecycleScrolled = false;
+                break;
+            case MotionEvent.ACTION_UP:
+                //mVelocityTracker.clear();
+                mVelocityTracker.addMovement(vtev);
+                //eventAddedToVelocityTracker = true;
+                mVelocityTracker.computeCurrentVelocity(1000, (float)mMaxFlingVelocity);
+                float yvel = -mVelocityTracker.getYVelocity(mScrollPointerId);
+
+                if (yvel == 0.0F) {
+                    setScrollState(0);
+                } else {
+                    //fling((int)yvel);
+                }
+
+                resetTouch();
+                //stopNestedScroll();
+                break;
+            case MotionEvent.ACTION_MOVE:
+                /*
+                int index = ev.findPointerIndex(mScrollPointerId);
+                if (index < 0) {
+                    return false;
+                }
+                int x = (int)(ev.getX(index) + 0.5F);
+                int y = (int)(ev.getY(index) + 0.5F);
+                if (mScrollState != 1) {
+                    int dy = y - mInitialTouchY;
+                    boolean startScroll = false;
+                    if (Math.abs(dy) > mTouchSlop) {
+                        mLastTouchY = y;
+                        startScroll = true;
+                    }
+
+                    if (startScroll) {
+                        setScrollState(1);
+                    }
+                }
+                 */
+                nestedScrollAxis = ev.findPointerIndex(mScrollPointerId);
+                if (nestedScrollAxis < 0) {
+                    Log.e("SpringScrollView", "Error processing scroll; pointer index for id " + mScrollPointerId + " not found. Did any MotionEvents get skipped?");
+                    vtev.recycle();
+                    //return false;
+                    return -1;
+                }
+
+                int x = (int)(ev.getX(nestedScrollAxis) + 0.5F);
+                int y = (int)(ev.getY(nestedScrollAxis) + 0.5F);
+                int dy = mLastTouchY - y;
+
+                //Log.d("SpringListView", "onTouchEvent ;  dy " + dy + " mScrollState " + mScrollState);
+
+                if (viewGroup.dispatchNestedPreScroll(0, dy, mScrollConsumed, mScrollOffset)) {
+                    //dx -= mScrollConsumed[0];
+                    dy -= mScrollConsumed[1];
+                    vtev.offsetLocation((float)mScrollOffset[0], (float)mScrollOffset[1]);
+                    int[] var10000 = mNestedOffsets;
+                    var10000[0] += mScrollOffset[0];
+                    var10000 = mNestedOffsets;
+                    var10000[1] += mScrollOffset[1];
+                }
+
+                if (mScrollState != 1) {
+                    boolean startScroll = false;
+                    if (Math.abs(dy) > mTouchSlop) {
+                        if (dy > 0) {
+                            dy -= mTouchSlop;
+                        } else {
+                            dy += mTouchSlop;
+                        }
+
+                        startScroll = true;
+                    }
+
+                    if (startScroll) {
+                        setScrollState(1);
+                    }
+                }
+
+                if (mScrollState == 1) {
+                    mLastTouchY = y - mScrollOffset[1];
+                    if (scrollByInternal(0, dy, vtev)) {
+                        viewGroup.getParent().requestDisallowInterceptTouchEvent(true);
+                    }
+
+                    //if (this.mGapWorker != null && (dx != 0 || dy != 0)) {
+                    //    this.mGapWorker.postFromTraversal(this, dx, dy);
+                    //}
+                }
+                break;
+            case MotionEvent.ACTION_CANCEL:
+                //cancelTouch();
+                cancelScroll();
+                break;
+            case MotionEvent.ACTION_OUTSIDE:
+            default:
+                break;
+            case MotionEvent.ACTION_POINTER_DOWN:
+                mScrollPointerId = ev.getPointerId(actionIndex);
+                mInitialTouchY = mLastTouchY = (int)(ev.getY(actionIndex) + 0.5F);
+                break;
+            case MotionEvent.ACTION_POINTER_UP:
+                onPointerUp(ev);
+                break;
+        }
+
+        vtev.recycle();
+        mLastX = ev.getX();
+        mLastY = ev.getY();
+
+        //return super.onInterceptTouchEvent(ev);
+        return 0;
+        //if (!intercept)
+        //    return false;
+        //return mScrollState == 1;
+    }
+
+    public int onTouchEvent2(MotionEvent ev) {
+        if (mVelocityTracker == null) {
+            mVelocityTracker = VelocityTracker.obtain();
+        }
+
+        boolean eventAddedToVelocityTracker = false;
+        MotionEvent vtev = MotionEvent.obtain(ev);
+        int action = ev.getActionMasked();
+        int actionIndex = ev.getActionIndex();
+        if (action == 0) {
+            mNestedOffsets[0] = mNestedOffsets[1] = 0;
+        }
+
+        vtev.offsetLocation((float)mNestedOffsets[0], (float)mNestedOffsets[1]);
+        int nestedScrollAxis;
+
+        //Log.d("SpringScrollView", "onTouchEvent  " + action);
+        switch(action) {
+            case MotionEvent.ACTION_DOWN:
+                mScrollPointerId = ev.getPointerId(0);
+                mInitialTouchY = mLastTouchY = (int)(ev.getY() + 0.5F);
+                //int childcount = getChildCount();
+                //int lastChildBottom = 0;
+                //if (childcount > 0)
+                //    lastChildBottom = getChildAt(childcount-1).getBottom();
+                //if (mInitialTouchY > lastChildBottom || mInitialTouchY < 0 || mInitialTouchY > getHeight())
+                //    return false;
+
+                nestedScrollAxis = 0;
+
+                //nestedScrollAxis |= 2;
+                //startNestedScroll(nestedScrollAxis);
+                //mRecycleScrolled = false;
+                break;
+            case MotionEvent.ACTION_UP:
+                mVelocityTracker.addMovement(vtev);
+                eventAddedToVelocityTracker = true;
+                mVelocityTracker.computeCurrentVelocity(1000, (float)mMaxFlingVelocity);
+                float yvel = -mVelocityTracker.getYVelocity(mScrollPointerId);
+
+                //Log.d("SpringListView", "onTouchEvent ;  yvel " + yvel + " mMaxFlingVelocity  " + mMaxFlingVelocity + "  Top " + getFirstVisiblePosition());
+                if (yvel == 0.0F) {
+                    setScrollState(0);
+                } else {
+                    //fling((int)yvel);
+                    //Log.d("SpringScrollView", "mGlowing " + mGlowing);
+                    //if (!mGlowing) {
+                    //    pullGlows(ev.getX(), (float) 0, ev.getY(), -yvel/6);
+                    mLastYVel = yvel;
+                }
+
+                resetTouch();
+                break;
+            case MotionEvent.ACTION_MOVE:
+                nestedScrollAxis = ev.findPointerIndex(mScrollPointerId);
+                if (nestedScrollAxis < 0) {
+                    Log.e("SpringScrollView", "Error processing scroll; pointer index for id " + mScrollPointerId + " not found. Did any MotionEvents get skipped?");
+                    vtev.recycle();
+                    //return false;
+                    return -1;
+                }
+
+                int x = (int)(ev.getX(nestedScrollAxis) + 0.5F);
+                int y = (int)(ev.getY(nestedScrollAxis) + 0.5F);
+                int dy = mLastTouchY - y;
+
+                //Log.d("SpringListView", "onTouchEvent ;  dy " + dy + " mScrollState " + mScrollState);
+
+                if (viewGroup.dispatchNestedPreScroll(0, dy, mScrollConsumed, mScrollOffset)) {
+                    //dx -= mScrollConsumed[0];
+                    dy -= mScrollConsumed[1];
+                    vtev.offsetLocation((float)mScrollOffset[0], (float)mScrollOffset[1]);
+                    int[] var10000 = mNestedOffsets;
+                    var10000[0] += mScrollOffset[0];
+                    var10000 = mNestedOffsets;
+                    var10000[1] += mScrollOffset[1];
+                }
+
+                if (mScrollState != 1) {
+                    boolean startScroll = false;
+                    if (Math.abs(dy) > mTouchSlop) {
+                        if (dy > 0) {
+                            dy -= mTouchSlop;
+                        } else {
+                            dy += mTouchSlop;
+                        }
+
+                        startScroll = true;
+                    }
+
+                    if (startScroll) {
+                        setScrollState(1);
+                    }
+                }
+
+                if (mScrollState == 1) {
+                    mLastTouchY = y - mScrollOffset[1];
+                    if (scrollByInternal(0, dy, vtev)) {
+                        viewGroup.getParent().requestDisallowInterceptTouchEvent(true);
+                    }
+
+                    //if (this.mGapWorker != null && (dx != 0 || dy != 0)) {
+                    //    this.mGapWorker.postFromTraversal(this, dx, dy);
+                    //}
+                }
+                break;
+            case MotionEvent.ACTION_CANCEL:
+                //cancelTouch();
+                cancelScroll();
+                break;
+            case MotionEvent.ACTION_OUTSIDE:
+            default:
+                break;
+            case MotionEvent.ACTION_POINTER_DOWN:
+                mScrollPointerId = ev.getPointerId(actionIndex);
+                mInitialTouchY = mLastTouchY = (int)(ev.getY(actionIndex) + 0.5F);
+                break;
+            case MotionEvent.ACTION_POINTER_UP:
+                onPointerUp(ev);
+
+        }
+        if (!eventAddedToVelocityTracker) {
+            mVelocityTracker.addMovement(vtev);
+        }
+        vtev.recycle();
+        mLastX = ev.getX();
+        mLastY = ev.getY();
+
+        //return true;
+        //return super.onTouchEvent(ev);
+        return 1;
+    }
+
+    private boolean isReadyToOverScroll(boolean isPullDown) {
+
+        if (viewGroup.getChildCount() <= 0) {
+            return false;
+        } else {
+            if (isPullDown) {
+                return !viewGroup.canScrollVertically(-1);
+                /*
+                View firstVisibleChild = getChildAt(0);
+                if (firstVisibleChild != null) {
+                    return (getScrollY() == 0);
+                }
+                 */
+            } else {
+                return !viewGroup.canScrollVertically(1);
+                /*
+                View lastVisibleChild = getChildAt(getChildCount() - 1);
+
+                if (lastVisibleChild != null) {
+                    //return lastVisibleChild.getBottom() <= getHeight()
+                    //        - getPaddingBottom();
+                    int diff = lastVisibleChild.getBottom() - (getHeight() + getScrollY());
+                    //Log.d("SpringScrollView", "lastVisibleChild " + lastVisibleChild + " diff " + diff + " height " + getHeight());
+
+                    return (diff <= 0);
+                }
+
+                 */
+            }
+        }
+    }
+
     private boolean isReadyToOverScroll(boolean isPullDown, int y) {
         final Adapter adapter = absListView.getAdapter();
 
@@ -333,12 +655,14 @@ public class EffectHelper {
         if (mTopGlow != null) {
             mTopGlow.onRelease();
             mGlowing = false;
+            mGlowingTop = false;
             needsInvalidate |= mTopGlow.isFinished();
         }
 
         if (mBottomGlow != null) {
             mBottomGlow.onRelease();
             mGlowing = false;
+            mGlowingBottom = false;
             needsInvalidate |= mBottomGlow.isFinished();
         }
 
@@ -348,7 +672,7 @@ public class EffectHelper {
     }
 
     boolean scrollByInternal(int x, int y, MotionEvent ev) {
-        boolean readyToGo = isReadyToOverScroll(y < 0, y);
+        boolean readyToGo = (absListView != null)?isReadyToOverScroll(y < 0, y):isReadyToOverScroll(y<0);
         //Log.d("SpringListView", "scrollByInternal y " + y + "  1st visible pos " + getFirstVisiblePosition());
         if (!readyToGo)
             return false;
@@ -358,7 +682,7 @@ public class EffectHelper {
         int consumedX = 0;
         int consumedY = 0;
         //consumePendingUpdateOperations();
-        if (absListView.getAdapter() != null) {
+        if ((absListView != null && absListView.getAdapter() != null) || (absListView == null && viewGroup.getChildCount() >= 0)) {
             scrollStep(x, y, mScrollStepConsumed);
             consumedX = mScrollStepConsumed[0];
             consumedY = mScrollStepConsumed[1];
@@ -459,6 +783,74 @@ public class EffectHelper {
          */
     }
 
+    void onRecyclerViewScrolled() {
+        if (mSpringLayout == null) {
+            ViewGroup vg = (ViewGroup) viewGroup.getParent();
+            if (vg instanceof SpringRelativeLayout) {
+                mSpringLayout = (SpringRelativeLayout) vg;
+            }
+        }
+        if (mSpringLayout != null) {
+            mSpringLayout.onRecyclerViewScrolled();
+        }
+    }
+
+    public void scrollViewGlowing(int l, int t, int oldl, int oldt) {
+        Log.d("SpringScrollView", "scrollViewGlowing " + mGlowingTop + " " + mGlowingBottom);
+        if (mGlowingTop) {
+            if (viewGroup.canScrollVertically(-1) && t > oldt) {
+                onRecyclerViewScrolled();
+                //mRecycleScrolled = true;
+                //Log.d("SpringNestScrollView", "mRecycleScrolled");
+            }
+        }
+
+        if (mGlowingBottom) {
+            if (viewGroup.canScrollVertically(1) && t < oldt) {
+                onRecyclerViewScrolled();
+                //mRecycleScrolled = true;
+            }
+        }
+
+        if (!mGlowingTop) {
+            if (!viewGroup.canScrollVertically(-1) && t < oldt) {
+                float yvel = mLastYVel;
+                if (yvel >= 0) {
+
+                    // overscroll-by-fling happened before MotionEvent.ACTION_UP
+
+                    yvel = computeVelocity();
+                }
+                Log.d("SpringScrollView", "ready go " + yvel + " " + mLastY + " " + mLastYVel);
+
+                pullGlows(mLastX, (float) 0, mLastY, yvel / 20);
+                //ensureTopGlow();
+                if (mTopGlow != null) {
+                    mTopGlow.onAbsorb((int) (yvel / 20));
+                }
+            }
+        }
+
+        if (!mGlowingBottom) {
+            if (!viewGroup.canScrollVertically(1) && t > oldt) {
+                float yvel = mLastYVel;
+                if (yvel <= 0) {
+
+                    // overscroll-by-fling happened before MotionEvent.ACTION_UP
+
+                    yvel = computeVelocity();
+                }
+                Log.d("SpringScrollView", "ready go bottom " + yvel + " " + mLastY + " " + mLastYVel);
+
+                pullGlows(mLastX, (float) 0, mLastY, yvel / 20);
+                //ensureBottomGlow();
+                if (mBottomGlow != null) {
+                    mBottomGlow.onAbsorb((int) (yvel / 20));
+                }
+            }
+        }
+    }
+
     private void pullGlows(float x, float overscrollX, float y, float overscrollY) {
 
         boolean invalidate = false;
@@ -473,6 +865,7 @@ public class EffectHelper {
             if (mTopGlow != null) {
                 mTopGlow.onPull(-overscrollY / (float) viewGroup.getHeight(), x / (float) viewGroup.getWidth());
                 mGlowing = true;
+                mGlowingTop = true;
                 invalidate = true;
             }
         } else if (overscrollY > 0.0F && yRatio > mPullGrowTop && yRatio < mPullGrowBottom) {
@@ -480,6 +873,7 @@ public class EffectHelper {
             if (mBottomGlow != null) {
                 mBottomGlow.onPull(overscrollY / (float) viewGroup.getHeight(), 1.0F - x / (float) viewGroup.getWidth());
                 mGlowing = true;
+                mGlowingBottom = true;
                 invalidate = true;
             }
         }
@@ -492,7 +886,7 @@ public class EffectHelper {
     void ensureTopGlow() {
         if (mEdgeEffectFactory == null) {
             //throw new IllegalStateException("setEdgeEffectFactory first, please!");
-            Log.e("SpringListView", "setEdgeEffectFactory first, please!");
+            Log.e("EffectHelper", "setEdgeEffectFactory first, please!");
             return;
         }
 
