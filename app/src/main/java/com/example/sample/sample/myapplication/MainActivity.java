@@ -163,11 +163,13 @@ public class MainActivity extends Activity {
                         PullToRefreshScrollViewActivity2.class);
                 startActivity(intent);
                 break;
+                /*
             case R.id.menu_refresh_scrollview:
                 intent = new Intent(MainActivity.this,
                         RefreshScrollViewActivity.class);
                 startActivity(intent);
                 break;
+                 */
             case R.id.menu_pull_refresh_recyclerview:
                 intent = new Intent(MainActivity.this,
                         PullToRefreshRecyclerViewActivity.class);
