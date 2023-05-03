@@ -9,107 +9,123 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true">
-        <activity android:name="com.example.sample.sample.myapplication.MainActivity">
+        <activity android:name="com.example.sample.sample.myapplication.MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.sample.sample.myapplication.HorizontalRecyclerViewActivity">
+        <activity android:name="com.example.sample.sample.myapplication.HorizontalRecyclerViewActivity"
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
         <activity android:name="com.example.sample.sample.myapplication.ListActivity"
-            android:label="ListView">
+            android:label="ListView"
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
         <activity android:name="com.example.sample.sample.myapplication.GridViewActivity"
-            android:label="GridView">
+            android:label="GridView"
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
         <activity android:name="com.example.sample.sample.myapplication.ScrollViewActivity"
-            android:label="ScrollView">
+            android:label="ScrollView"
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
         <activity android:name="com.example.sample.sample.myapplication.PullToRefreshActivity"
-            android:label="PullToRefresh">
+            android:label="PullToRefresh"
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
         <activity android:name="com.example.sample.sample.myapplication.WebViewActivity"
             android:label="WebView"
-            android:theme="@style/MyAppTheme">
+            android:theme="@style/MyAppTheme"
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
         <activity android:name="com.example.sample.sample.myapplication.PullToRefreshScrollViewActivity"
-            android:label="PullToRefreshScrollView">
+            android:label="PullToRefreshScrollView"
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
         <activity android:name="com.example.sample.sample.myapplication.PullToRefreshScrollViewActivity2"
-            android:label="PullToRefreshScrollView2">
+            android:label="PullToRefreshScrollView2"
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
         <activity android:name="com.example.sample.sample.myapplication.RefreshScrollViewActivity"
-            android:label="RefreshScrollView w/o SpringRelatvieLayout">
+            android:label="RefreshScrollView w/o SpringRelatvieLayout"
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
 
         <activity android:name="com.example.sample.sample.myapplication.HorizontalScrollViewActivity"
-            android:label="HorizontalScrollView">
+            android:label="HorizontalScrollView"
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
         <activity android:name="com.example.sample.sample.myapplication.PullToRefreshRecyclerViewActivity"
-            android:label="PullToRefreshRecyclerView">
+            android:label="PullToRefreshRecyclerView"
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
         <activity android:name="com.example.sample.sample.myapplication.SpringRecyclerActivity"
-            android:label="SpringRecyclerView">
+            android:label="SpringRecyclerView"
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
         <activity android:name="com.example.sample.sample.myapplication.ExpandableListDemo"
-            android:label="ExpandableListView">
+            android:label="ExpandableListView"
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
         <activity android:name="com.example.sample.sample.myapplication.ListViewActivity2"
-            android:label="ListView2">
+            android:label="ListView2"
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
         <activity android:name="com.example.sample.sample.myapplication.MySettingsActivity"
             android:label="Settings"
-            >
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
         <activity android:name="com.example.sample.sample.myapplication.NestScrollActivity"
             android:label="NestScroll"
+            android:exported="false"
             android:theme="@style/MyEdgeOverlayTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
