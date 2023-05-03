@@ -1,5 +1,9 @@
 package com.example.lib.effect.effect.widget;
 
+import static androidx.dynamicanimation.animation.SpringForce.DAMPING_RATIO_MEDIUM_BOUNCY;
+import static androidx.dynamicanimation.animation.SpringForce.STIFFNESS_LOW;
+import static androidx.dynamicanimation.animation.SpringForce.STIFFNESS_MEDIUM;
+
 import android.content.Context;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
@@ -22,8 +26,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 public class SpringScrollView2 extends ScrollView {
-    private static final float STIFFNESS = (0.3f * SpringForce.STIFFNESS_MEDIUM + 0.7f * SpringForce.STIFFNESS_LOW);
-    private static final float DAMPING_RATIO = SpringForce.DAMPING_RATIO_MEDIUM_BOUNCY;
+    private static final float STIFFNESS = (0.3f * STIFFNESS_MEDIUM + 0.7f * STIFFNESS_LOW);
+    private static final float DAMPING_RATIO = DAMPING_RATIO_MEDIUM_BOUNCY;
     private static final float VELOCITY_MULTIPLIER = 0.3f;
 
     private SEdgeEffectFactory mEdgeEffectFactory;
@@ -391,9 +395,7 @@ public class SpringScrollView2 extends ScrollView {
 
     void ensureTopGlow() {
         if (mEdgeEffectFactory == null) {
-            //throw new IllegalStateException("setEdgeEffectFactory first, please!");
-            Log.e("SpringScrollView2", "setEdgeEffectFactory first, please!");
-            return;
+            throw new IllegalStateException("setEdgeEffectFactory first, please!");
         }
 
         if (mTopGlow == null) {
@@ -409,9 +411,7 @@ public class SpringScrollView2 extends ScrollView {
 
     void ensureBottomGlow() {
         if (mEdgeEffectFactory == null) {
-            //throw new IllegalStateException("setEdgeEffectFactory first, please!");
-            Log.e("SpringScrollView2", "setEdgeEffectFactory first, please!");
-            return;
+            throw new IllegalStateException("setEdgeEffectFactory first, please!");
         }
 
         if (mBottomGlow == null) {
@@ -437,21 +437,17 @@ public class SpringScrollView2 extends ScrollView {
         if (overscrollY < 0.0F && yRatio < mPullGrowBottom && yRatio > mPullGrowTop) {
             ensureTopGlow();
             //Log.d("SpringScrollView", " x " + x + " overscrollY " + overscrollY + " y " + y);
-            if (mTopGlow != null) {
-                mTopGlow.onPull(-overscrollY / (float) getHeight(), x / (float) getWidth());
-                //mGlowing = true;
-                mGlowingTop = true;
-                invalidate = true;
-            }
+            mTopGlow.onPull(-overscrollY / (float)getHeight(), x / (float)getWidth());
+            //mGlowing = true;
+            mGlowingTop = true;
+            invalidate = true;
         } else if (overscrollY > 0.0F && yRatio > mPullGrowTop && yRatio < mPullGrowBottom) {
             ensureBottomGlow();
             //Log.d("SpringScrollView", " overscrollY " + overscrollY + " y " + y);
-            if (mBottomGlow != null) {
-                mBottomGlow.onPull(overscrollY / (float) getHeight(), 1.0F - x / (float) getWidth());
-                //mGlowing = true;
-                mGlowingBottom = true;
-                invalidate = true;
-            }
+            mBottomGlow.onPull(overscrollY / (float)getHeight(), 1.0F - x / (float)getWidth());
+            //mGlowing = true;
+            mGlowingBottom = true;
+            invalidate = true;
         }
 
         if (invalidate || overscrollX != 0.0F || overscrollY != 0.0F) {
@@ -750,7 +746,8 @@ public class SpringScrollView2 extends ScrollView {
                     /**
                      * overscroll-by-fling happened before MotionEvent.ACTION_UP
                      */
-                    yvel = computeVelocity();
+                    mVelocityTracker.computeCurrentVelocity(1000, (float)mMaxFlingVelocity);
+                    yvel = -mVelocityTracker.getYVelocity(mScrollPointerId);
                 }
                 //Log.d("SpringNestScrollView", "ready go");
                 pullGlows(mLastX, (float) 0, mLastY, yvel / 20);
@@ -768,7 +765,8 @@ public class SpringScrollView2 extends ScrollView {
                     /**
                      * overscroll-by-fling happened before MotionEvent.ACTION_UP
                      */
-                    yvel = computeVelocity();
+                    mVelocityTracker.computeCurrentVelocity(1000, (float)mMaxFlingVelocity);
+                    yvel = -mVelocityTracker.getYVelocity(mScrollPointerId);
                 }
                 pullGlows(mLastX, (float) 0, mLastY, yvel / 20);
                 //ensureBottomGlow();
@@ -795,53 +793,83 @@ public class SpringScrollView2 extends ScrollView {
         finishScrollWithVelocity(0);
     }
 
-    private class SpringPro implements SpringEdgeEffect.ISpringPro {
-
-        @Override
-        public void finishScrollWithVelocity(float velocity) {
-            finishScrollWithVelocity(velocity);
-        }
-
-        @Override
-        public float getDistance() {
-            return mDistance;
-        }
-
-        @Override
-        public void setDistance(float f) {
-            mDistance = f;
-        }
-
-        @Override
-        public void setDampedScrollShift(float shift) {
-            mDampedScrollShift = shift;
-        }
-
-        @Override
-        public int getPullCount() {
-            return mPullCount;
-        }
-
-        @Override
-        public void setPullCount(int x) {
-            mPullCount = x;
-        }
-    }
-
-    private SpringPro mSpringPro = new SpringPro();
-
     private class ViewEdgeEffectFactory extends SEdgeEffectFactory {
         @NonNull @Override
         protected EdgeEffect createEdgeEffect(View view, int direction) {
             switch (direction) {
                 case DIRECTION_TOP:
                 case DIRECTION_LEFT:
-                    return new SpringEdgeEffect(getContext(), +VELOCITY_MULTIPLIER, mSpring, view.getHeight(), mSpringPro);
+                    return new SpringEdgeEffect(getContext(), +VELOCITY_MULTIPLIER);
                 case DIRECTION_BOTTOM:
                 case DIRECTION_RIGHT:
-                    return new SpringEdgeEffect(getContext(), -VELOCITY_MULTIPLIER, mSpring, view.getHeight(), mSpringPro);
+                    return new SpringEdgeEffect(getContext(), -VELOCITY_MULTIPLIER);
             }
             return super.createEdgeEffect(view, direction);
+        }
+    }
+
+    static class SEdgeEffectFactory {
+        public static final int DIRECTION_LEFT = 0;
+        public static final int DIRECTION_TOP = 1;
+        public static final int DIRECTION_RIGHT = 2;
+        public static final int DIRECTION_BOTTOM = 3;
+
+        public SEdgeEffectFactory() {
+        }
+
+        @NonNull
+        protected EdgeEffect createEdgeEffect(@NonNull View view, int direction) {
+            return new EdgeEffect(view.getContext());
+        }
+
+        @Retention(RetentionPolicy.SOURCE)
+        public @interface EdgeDirection {
+        }
+    }
+
+    private class SpringEdgeEffect extends EdgeEffect {
+
+        private final float mVelocityMultiplier;
+
+        private boolean mReleased = true;
+
+        public SpringEdgeEffect(Context context, float velocityMultiplier) {
+            super(context);
+            mVelocityMultiplier = velocityMultiplier;
+        }
+
+        @Override
+        public boolean draw(Canvas canvas) {
+            return false;
+        }
+
+        @Override
+        public void onAbsorb(int velocity) {
+            finishScrollWithVelocity(velocity * mVelocityMultiplier);
+            mDistance = 0;
+        }
+
+        @Override
+        public void onPull(float deltaDistance, float displacement) {
+            if (mSpring.isRunning()) {
+                mSpring.cancel();
+            }
+            mPullCount++;
+            setActiveEdge(this);
+            mDistance += deltaDistance * (mVelocityMultiplier / 3f);
+            setDampedScrollShift(mDistance * getHeight());
+            mReleased = false;
+        }
+
+        @Override
+        public void onRelease() {
+            if (mReleased) {
+                return;
+            }
+            mDistance = 0;
+            mPullCount = 0;
+            finishScrollWithVelocity(0);
+            mReleased = true;
         }
     }
 
@@ -884,14 +912,6 @@ public class SpringScrollView2 extends ScrollView {
         }
 
         super.draw(canvas);
-    }
-
-    float computeVelocity() {
-        if (mVelocityTracker == null) {
-            mVelocityTracker = VelocityTracker.obtain();
-        }
-        mVelocityTracker.computeCurrentVelocity(1000, (float)mMaxFlingVelocity);
-        return -mVelocityTracker.getYVelocity(mScrollPointerId);
     }
 
 }
