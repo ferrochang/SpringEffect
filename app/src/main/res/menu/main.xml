@@ -41,9 +41,9 @@
     <item android:id="@+id/menu_pull_refresh_scrollview2"
         android:showAsAction="ifRoom"
         android:title="@string/pull_to_refresh_scrollview2" />
-    <!--item android:id="@+id/menu_refresh_scrollview"
+    <item android:id="@+id/menu_refresh_scrollview"
         android:showAsAction="ifRoom"
-        android:title="@string/refresh_scrollview" /-->
+        android:title="@string/refresh_scrollview" />
     <item android:id="@+id/menu_horizontal_scrollview"
         android:showAsAction="ifRoom"
         android:title="@string/horizontal_scrollview" />
