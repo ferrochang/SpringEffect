@@ -4,7 +4,6 @@ import android.app.Activity
 import android.os.Build
 import android.os.Bundle
 import android.view.View
-import android.widget.ExpandableListAdapter
 import android.widget.ExpandableListView.OnChildClickListener
 import android.widget.ExpandableListView.OnGroupCollapseListener
 import android.widget.ExpandableListView.OnGroupExpandListener
@@ -28,7 +27,7 @@ class ExpandableListDemo : Activity() {
         springLayout.addSpringView(R.id.expandableListView)
         var expandableListView = findViewById<View>(R.id.expandableListView) as SpringExpandableListView
         expandableListView.setEdgeEffectFactory(springLayout.createViewEdgeEffectFactory())
-        var expandableListDetail = ExpandableListDataPump.getData()
+        var expandableListDetail = ExpandableListDataPump.data
         var expandableListTitle = ArrayList(expandableListDetail.keys)
         var expandableListAdapter =
             CustomExpandableListAdapter(this, expandableListTitle, expandableListDetail)
