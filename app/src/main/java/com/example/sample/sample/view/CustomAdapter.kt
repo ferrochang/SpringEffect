@@ -27,7 +27,8 @@ class CustomAdapter(dataSet: Array<String?>) : RecyclerView.Adapter<CustomAdapte
                 Log.d(TAG, "Element $adapterPosition clicked.")
                 listener?.onListItemClicked(v)
             }
-            textView = v.findViewById<View>(R.id.textView) as TextView
+            //textView = v.findViewById<View>(R.id.textView) as TextView
+            textView = v.findViewById<View>(android.R.id.text1) as TextView
         }
     }
     // END_INCLUDE(recyclerViewSampleViewHolder)
@@ -55,7 +56,8 @@ class CustomAdapter(dataSet: Array<String?>) : RecyclerView.Adapter<CustomAdapte
         // Create a new view.
         val v = LayoutInflater.from(viewGroup.context)
             .inflate(
-                if (mHorizontal) R.layout.text_column_item else R.layout.text_row_item,
+                //if (mHorizontal) R.layout.text_column_item else R.layout.text_row_item,
+                if (mHorizontal) android.R.layout.simple_gallery_item else android.R.layout.simple_list_item_1,
                 viewGroup,
                 false
             )

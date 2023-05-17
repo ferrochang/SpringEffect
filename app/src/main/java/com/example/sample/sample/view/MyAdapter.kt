@@ -36,8 +36,8 @@ class MyAdapter(context: Context, strs: Array<String>?) : BaseAdapter() {
     }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        val v = convertView ?: mLayInf.inflate(R.layout.text_row_item, parent, false)
-        val txtView = v.findViewById<View>(R.id.textView) as TextView
+        val v = convertView ?: mLayInf.inflate(android.R.layout.simple_list_item_1, parent, false)
+        val txtView = v.findViewById<View>(android.R.id.text1) as TextView
         txtView.tag = "pos $position"
         if (convertView == null) {
             txtView.setOnClickListener { view ->

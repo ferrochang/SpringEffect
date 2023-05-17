@@ -25,6 +25,6 @@ class SpringRecyclerActivity : Activity() {
     }
 
     companion object {
-        private const val DATASET_COUNT = 12
+        private const val DATASET_COUNT = 22
     }
 }

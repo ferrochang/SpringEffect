@@ -31,10 +31,12 @@ class CustomExpandableListAdapter(
         if (refView == null) {
             val layoutInflater = mContext
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            refView = layoutInflater.inflate(R.layout.list_item, null)
+            refView = layoutInflater.inflate(android.R.layout.simple_expandable_list_item_1, null)
+            //refView = layoutInflater.inflate(R.layout.list_item, null)
         }
         val expandedListTextView = refView!!
-            .findViewById<View>(R.id.expandedListItem) as TextView
+            .findViewById<View>(android.R.id.text1) as TextView
+            //.findViewById<View>(R.id.expandedListItem) as TextView
         expandedListTextView.text = expandedListText
         return refView
     }
