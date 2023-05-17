@@ -25,8 +25,9 @@ class ListViewActivity2 : Activity() {
             val toast = Toast.makeText(this@ListViewActivity2, "click item $i", Toast.LENGTH_SHORT)
             toast.show()
         }
-        val item = this.layoutInflater.inflate(R.layout.text_row_item, null, false)
-        val headerText = item.findViewById<TextView>(R.id.textView)
+        val item = this.layoutInflater.inflate(android.R.layout.simple_list_item_1, null, false)
+        val headerText = item.findViewById<TextView>(android.R.id.text1)
+        headerText.setText("Header")
         listView.addHeaderView(item)
         headerText.setOnClickListener {
             val toast =
