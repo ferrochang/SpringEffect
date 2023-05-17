@@ -53,7 +53,6 @@
         </activity>
         <activity android:name="com.example.sample.sample.myapplication.WebViewActivity"
             android:label="WebView"
-            android:theme="@style/MyAppTheme"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

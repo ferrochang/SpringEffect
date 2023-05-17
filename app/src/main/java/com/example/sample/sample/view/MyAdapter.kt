@@ -35,9 +35,8 @@ class MyAdapter(context: Context, strs: Array<String>?) : BaseAdapter() {
         return position.toLong()
     }
 
-    override fun getView(position: Int, convertView: View, parent: ViewGroup): View {
-        val v: View
-        v = convertView ?: mLayInf.inflate(R.layout.text_row_item, parent, false)
+    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+        val v = convertView ?: mLayInf.inflate(R.layout.text_row_item, parent, false)
         val txtView = v.findViewById<View>(R.id.textView) as TextView
         txtView.tag = "pos $position"
         if (convertView == null) {
