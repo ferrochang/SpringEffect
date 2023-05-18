@@ -68,7 +68,7 @@ class MyPreferenceFragment : PreferenceFragmentCompat() {
             }
         val testingPrefDel = mTestingCategory!!.getPreference(1)
         testingPrefDel.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-            if (!mList.isEmpty()) {
+            if (mList.isNotEmpty()) {
                 val candidateIndex = (Math.random() * (mList.size - 1)).toInt()
                 //mTestingCategory.removePreference(mList.get(keyIndex - 1));
                 val candidate = mList[candidateIndex]
