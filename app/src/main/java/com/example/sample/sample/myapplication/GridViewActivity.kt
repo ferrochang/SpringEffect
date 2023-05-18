@@ -21,8 +21,7 @@ class GridViewActivity : Activity() {
         val gridView = findViewById<SpringGridView>(R.id.gridview)
         //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
         //        android.R.layout.simple_list_item_1, android.R.id.text1, values);
-        val adapter = MyAdapter(this, values)
-        gridView.adapter = adapter
+        gridView.adapter = MyAdapter(this, values)
         gridView.numColumns = 2
         gridView.setEdgeEffectFactory(mSpringLayout!!.createViewEdgeEffectFactory())
         gridView.onItemClickListener = OnItemClickListener { adapterView, view, i, l ->
