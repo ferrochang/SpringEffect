@@ -19,8 +19,8 @@ class SpringRecyclerActivity : Activity() {
         //mAdapter = CustomAdapter(mDataset)
 
         //mLayoutManager = LinearLayoutManager(this)
-        mRecyclerView.setLayoutManager(LinearLayoutManager(this))
-        mRecyclerView.setAdapter(CustomAdapter(Array<String?>(DATASET_COUNT) { "This is element $it" }))
+        mRecyclerView.layoutManager = LinearLayoutManager(this)
+        mRecyclerView.adapter = CustomAdapter(Array<String?>(DATASET_COUNT) { "This is element $it" })
         mRecyclerView.setHandleTouch(false)
     }
 
