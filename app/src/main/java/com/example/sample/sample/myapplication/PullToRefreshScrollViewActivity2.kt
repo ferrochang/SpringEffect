@@ -24,10 +24,9 @@ class PullToRefreshScrollViewActivity2 : Activity() {
         setContentView(R.layout.pull_to_refresh_scrollview2)
         val mRefreshLayout = findViewById<View>(R.id.swipe_container) as SpringRefreshLayout
         val mSpringLayout = findViewById<View>(R.id.spring_layout) as SpringRelativeLayout
-        val mScrollView = findViewById<View>(R.id.scrollview) as SpringScrollView
         mSpringLayout.addSpringView(R.id.scrollview)
         val scrollView = findViewById<View>(R.id.scrollview) as SpringScrollView
-        scrollView.setEdgeEffectFactory(mSpringLayout!!.createViewEdgeEffectFactory())
+        scrollView.setEdgeEffectFactory(mSpringLayout.createViewEdgeEffectFactory())
         //scrollView.setOverScrollNested(true);
         mRefreshLayout.setOverScrollChild(scrollView)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
@@ -42,7 +41,7 @@ class PullToRefreshScrollViewActivity2 : Activity() {
             }
             //Handler().postDelayed({ mRefreshLayout!!.isRefreshing = false }, 300)
         }
-        mScrollView.setScrollingChangeListener(object : scrollingChangeListener {
+        scrollView.setScrollingChangeListener(object : scrollingChangeListener {
             override fun getDir(): Int {
                 return -1 //listening edge top;
             }
