@@ -17,7 +17,6 @@ import android.view.animation.Animation
 import android.view.animation.Animation.AnimationListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.example.lib.effect.effect.widget.SpringRelativeLayout
 import com.example.sample.myapplication.R
