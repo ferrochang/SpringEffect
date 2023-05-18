@@ -18,15 +18,15 @@ class PullToRefreshRecyclerViewActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.pull_refresh_recyclerview)
-        var mLayoutManager = LinearLayoutManager(this)
+        //val mLayoutManager = LinearLayoutManager(this)
         //mAdapter = CustomAdapter(mDataset)
         //mSpringLayout = (SpringRelativeLayout) findViewById(R.id.spring_layout);
         //mSpringLayout.addSpringView(R.id.recyclerView);
-        var mRecyclerView = findViewById<View>(R.id.recyclerView) as SpringRecyclerView
-        mRecyclerView!!.layoutManager = mLayoutManager
-        mRecyclerView!!.adapter = CustomAdapter(Array<String?>(DATASET_COUNT) {"This is element #$it"})
+        val mRecyclerView = findViewById<View>(R.id.recyclerView) as SpringRecyclerView
+        mRecyclerView.layoutManager = LinearLayoutManager(this)
+        mRecyclerView.adapter = CustomAdapter(Array<String?>(DATASET_COUNT) {"This is element #$it"})
         //mRecyclerView.setEdgeEffectFactory(mSpringLayout.createEdgeEffectFactory());
-        var mRefreshLayout = findViewById<View>(R.id.swipe_container) as SpringRefreshLayout
+        val mRefreshLayout = findViewById<View>(R.id.swipe_container) as SpringRefreshLayout
         mRefreshLayout.setOverScrollChild(mRecyclerView)
         mRefreshLayout.setOnRefreshListener(OnRefreshListener {
             mRefreshLayout.isRefreshing = true

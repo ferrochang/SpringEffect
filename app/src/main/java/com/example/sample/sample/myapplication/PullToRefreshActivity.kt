@@ -24,15 +24,15 @@ class PullToRefreshActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.pull_to_refresh)
-        var mRefreshLayout = findViewById<View>(R.id.swipe_container) as SwipeRefreshLayout
-        var mSpringLayout = findViewById<View>(R.id.spring_layout) as SpringRelativeLayout
-        mSpringLayout!!.addSpringView(R.id.listview)
+        val mRefreshLayout = findViewById<View>(R.id.swipe_container) as SwipeRefreshLayout
+        val mSpringLayout = findViewById<View>(R.id.spring_layout) as SpringRelativeLayout
+        mSpringLayout.addSpringView(R.id.listview)
         val listView = findViewById<SpringListView>(R.id.listview)
         //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
         //        android.R.layout.simple_list_item_1, android.R.id.text1, values);
-        val adapter = MyAdapter(this, values)
-        listView.adapter = adapter
-        listView.setEdgeEffectFactory(mSpringLayout!!.createViewEdgeEffectFactory())
+        //val adapter = MyAdapter(this, values)
+        listView.adapter = MyAdapter(this, values)
+        listView.setEdgeEffectFactory(mSpringLayout.createViewEdgeEffectFactory())
         listView.setOverScrollNested(true)
         listView.onItemClickListener = OnItemClickListener { adapterView, view, i, l ->
             val toast =
@@ -41,7 +41,7 @@ class PullToRefreshActivity : Activity() {
         }
         val item = this.layoutInflater.inflate(android.R.layout.simple_list_item_1, null, false)
         val headerText = item.findViewById<TextView>(android.R.id.text1)
-        headerText.setText("Header")
+        headerText.text = "Header"
         listView.addHeaderView(item)
         headerText.setOnClickListener {
             val toast =
@@ -52,12 +52,12 @@ class PullToRefreshActivity : Activity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             listView.setEdgeEffectColor(0xffffff)
         }
-        mRefreshLayout!!.setOnRefreshListener {
-            mRefreshLayout!!.isRefreshing = true
+        mRefreshLayout.setOnRefreshListener {
+            mRefreshLayout.isRefreshing = true
 
             CoroutineScope(Dispatchers.Main).launch {
                 delay(1000)
-                mRefreshLayout!!.isRefreshing = false
+                mRefreshLayout.isRefreshing = false
             }
             //Handler().postDelayed({ mRefreshLayout!!.isRefreshing = false }, 300)
         }

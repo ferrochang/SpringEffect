@@ -46,16 +46,16 @@ class MainActivity : Activity() {
         mSpringLayoutList = null
 
          */
-        var mSpringLayout = findViewById<View>(R.id.spring_layout) as SpringRelativeLayout
-        mSpringLayout!!.addSpringView(R.id.recyclerView)
+        val mSpringLayout = findViewById<View>(R.id.spring_layout) as SpringRelativeLayout
+        mSpringLayout.addSpringView(R.id.recyclerView)
         mRecyclerView = findViewById<View>(R.id.recyclerView) as RecyclerView
         //mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        var mLayoutManager = LinearLayoutManager(this)
-        mRecyclerView!!.layoutManager = mLayoutManager
+        //var mLayoutManager = LinearLayoutManager(this)
+        mRecyclerView!!.layoutManager = LinearLayoutManager(this)
         //mAdapter = CustomAdapter(mDataset, mItemClickListener)
         mAdapter = CustomAdapter(Array<String?>(DATASET_COUNT) { "This is element #$it" }, mItemClickListener)
         mRecyclerView!!.adapter = mAdapter
-        mRecyclerView!!.edgeEffectFactory = mSpringLayout!!.createEdgeEffectFactory()
+        mRecyclerView!!.edgeEffectFactory = mSpringLayout.createEdgeEffectFactory()
         mRecyclerView!!.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             var state = RecyclerView.SCROLL_STATE_IDLE
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {

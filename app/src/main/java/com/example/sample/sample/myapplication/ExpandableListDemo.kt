@@ -23,13 +23,13 @@ class ExpandableListDemo : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.expandablelist_layout)
-        var springLayout = findViewById<View>(R.id.spring_layout) as SpringRelativeLayout
+        val springLayout = findViewById<View>(R.id.spring_layout) as SpringRelativeLayout
         springLayout.addSpringView(R.id.expandableListView)
-        var expandableListView = findViewById<View>(R.id.expandableListView) as SpringExpandableListView
+        val expandableListView = findViewById<View>(R.id.expandableListView) as SpringExpandableListView
         expandableListView.setEdgeEffectFactory(springLayout.createViewEdgeEffectFactory())
-        var expandableListDetail = ExpandableListDataPump.data
-        var expandableListTitle = ArrayList(expandableListDetail.keys)
-        var expandableListAdapter =
+        val expandableListDetail = ExpandableListDataPump.data
+        val expandableListTitle = ArrayList(expandableListDetail.keys)
+        val expandableListAdapter =
             CustomExpandableListAdapter(this, expandableListTitle, expandableListDetail)
         expandableListView.setAdapter(expandableListAdapter)
         expandableListView.setOnGroupExpandListener(OnGroupExpandListener { groupPosition ->

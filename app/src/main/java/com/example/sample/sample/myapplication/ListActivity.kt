@@ -18,14 +18,14 @@ class ListActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_listview)
-        var mSpringLayout = findViewById<View>(R.id.spring_layout) as SpringRelativeLayout
-        mSpringLayout!!.addSpringView(R.id.listview)
+        val mSpringLayout = findViewById<View>(R.id.spring_layout) as SpringRelativeLayout
+        mSpringLayout.addSpringView(R.id.listview)
         val listView = findViewById<SpringListView>(R.id.listview)
         //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
         //        android.R.layout.simple_list_item_1, android.R.id.text1, values);
         val adapter = MyAdapter(this, values)
         listView.adapter = adapter
-        listView.setEdgeEffectFactory(mSpringLayout!!.createViewEdgeEffectFactory())
+        listView.setEdgeEffectFactory(mSpringLayout.createViewEdgeEffectFactory())
         listView.onItemClickListener = OnItemClickListener { adapterView, view, i, l ->
             val toast = Toast.makeText(this@ListActivity, "click item $i", Toast.LENGTH_SHORT)
             toast.show()

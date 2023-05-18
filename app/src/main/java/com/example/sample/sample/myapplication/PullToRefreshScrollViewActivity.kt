@@ -20,9 +20,9 @@ class PullToRefreshScrollViewActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.pull_to_refresh_scrollview)
-        var mRefreshLayout = findViewById<View>(R.id.swipe_container) as SwipeRefreshLayout
-        var mSpringLayout = findViewById<View>(R.id.spring_layout) as SpringRelativeLayout
-        mSpringLayout!!.addSpringView(R.id.scrollview)
+        val mRefreshLayout = findViewById<View>(R.id.swipe_container) as SwipeRefreshLayout
+        val mSpringLayout = findViewById<View>(R.id.spring_layout) as SpringRelativeLayout
+        mSpringLayout.addSpringView(R.id.scrollview)
         val scrollView = findViewById<View>(R.id.scrollview) as SpringScrollView
         scrollView.setEdgeEffectFactory(mSpringLayout!!.createViewEdgeEffectFactory())
         scrollView.setOverScrollNested(true)
@@ -30,12 +30,12 @@ class PullToRefreshScrollViewActivity : Activity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             scrollView.setEdgeEffectColor(0xffffff)
         }
-        mRefreshLayout!!.setOnRefreshListener {
-            mRefreshLayout!!.isRefreshing = true
+        mRefreshLayout.setOnRefreshListener {
+            mRefreshLayout.isRefreshing = true
             Log.d("SpringScrollView", "onRefresh")
             CoroutineScope(Dispatchers.Main).launch {
                 delay(1000)
-                mRefreshLayout!!.isRefreshing = false
+                mRefreshLayout.isRefreshing = false
             }
             //Handler().postDelayed({ mRefreshLayout!!.isRefreshing = false }, 300)
         }

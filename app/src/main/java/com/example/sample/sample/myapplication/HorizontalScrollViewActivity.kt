@@ -15,12 +15,12 @@ class HorizontalScrollViewActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.horizontal_scrollview)
-        val springRelativeLayout_scrollView =
+        val springRelativeLayoutScrollView =
             findViewById<View>(R.id.scrollview_spring_layout) as SpringRelativeLayout
-        springRelativeLayout_scrollView.addSpringView(R.id.scrollview)
+        springRelativeLayoutScrollView.addSpringView(R.id.scrollview)
         val scrollView = findViewById<View>(R.id.scrollview) as SpringHorizontalScrollView
         scrollView.setEdgeEffectFactory(
-            springRelativeLayout_scrollView.createViewEdgeEffectFactory(
+            springRelativeLayoutScrollView.createViewEdgeEffectFactory(
                 true
             )
         )
