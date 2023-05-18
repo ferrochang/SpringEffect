@@ -3,7 +3,6 @@ package com.example.sample.sample.myapplication
 import android.app.Activity
 import android.os.Build
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView.OnItemClickListener
@@ -14,6 +13,10 @@ import com.example.lib.effect.effect.widget.SpringListView
 import com.example.lib.effect.effect.widget.SpringRelativeLayout
 import com.example.sample.myapplication.R
 import com.example.sample.sample.view.MyAdapter
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class PullToRefreshActivity : Activity() {
     //var mSpringLayout: SpringRelativeLayout? = null
@@ -51,7 +54,12 @@ class PullToRefreshActivity : Activity() {
         }
         mRefreshLayout!!.setOnRefreshListener {
             mRefreshLayout!!.isRefreshing = true
-            Handler().postDelayed({ mRefreshLayout!!.isRefreshing = false }, 300)
+
+            CoroutineScope(Dispatchers.Main).launch {
+                delay(1000)
+                mRefreshLayout!!.isRefreshing = false
+            }
+            //Handler().postDelayed({ mRefreshLayout!!.isRefreshing = false }, 300)
         }
     }
 
