@@ -17,6 +17,7 @@ import android.view.animation.Animation
 import android.view.animation.Animation.AnimationListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.example.lib.effect.effect.widget.SpringRelativeLayout
 import com.example.sample.myapplication.R
@@ -25,11 +26,7 @@ import com.example.sample.sample.view.DefaultItemAnimator
 import com.example.sample.sample.view.MyItemClickListener
 
 class MainActivity : Activity() {
-    //private var mSpringLayout: SpringRelativeLayout? = null
-    private var mRecyclerView: RecyclerView? = null
-    //protected var mLayoutManager: RecyclerView.LayoutManager? = null
-    //protected var mDataset: Array<String?>
-    protected var mAdapter: CustomAdapter? = null
+
     private var mDemoAnimAdd = true
     //private var mSpringLayoutList: ArrayList<ViewGroup>? = ArrayList()
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,15 +45,31 @@ class MainActivity : Activity() {
          */
         val mSpringLayout = findViewById<View>(R.id.spring_layout) as SpringRelativeLayout
         mSpringLayout.addSpringView(R.id.recyclerView)
-        mRecyclerView = findViewById<View>(R.id.recyclerView) as RecyclerView
+        val mRecyclerView = findViewById<View>(R.id.recyclerView) as RecyclerView
         //mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         //var mLayoutManager = LinearLayoutManager(this)
-        mRecyclerView!!.layoutManager = LinearLayoutManager(this)
+        mRecyclerView.layoutManager = LinearLayoutManager(this)
         //mAdapter = CustomAdapter(mDataset, mItemClickListener)
-        mAdapter = CustomAdapter(Array<String?>(DATASET_COUNT) { "This is element #$it" }, mItemClickListener)
-        mRecyclerView!!.adapter = mAdapter
-        mRecyclerView!!.edgeEffectFactory = mSpringLayout.createEdgeEffectFactory()
-        mRecyclerView!!.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        //mAdapter = CustomAdapter(Array<String?>(DATASET_COUNT) { "This is element #$it" }, mItemClickListener)
+
+        mRecyclerView.adapter = CustomAdapter(Array<String?>(DATASET_COUNT) { "This is element #$it" }, object : MyItemClickListener {
+            override fun onListItemClicked(view: View?) {
+                val itemAdapterPosition = mRecyclerView.getChildAdapterPosition(view!!)
+                if (itemAdapterPosition == RecyclerView.NO_POSITION) {
+                    return
+                }
+                val adapter = (mRecyclerView.adapter) as CustomAdapter
+                if (mDemoAnimAdd) {
+                    for (c in 0..0) adapter.addItemAtPosition(itemAdapterPosition)
+                } else {
+                    adapter.removeItemAtPosition(itemAdapterPosition)
+                }
+            }
+
+        })
+        //mRecyclerView.adapter = mAdapter
+        mRecyclerView.edgeEffectFactory = mSpringLayout.createEdgeEffectFactory()
+        mRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             var state = RecyclerView.SCROLL_STATE_IDLE
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 //super.onScrollStateChanged(recyclerView, newState);
@@ -71,10 +84,10 @@ class MainActivity : Activity() {
                 //super.onScrolled(recyclerView, dx, dy);
             }
         })
-        val itemAnimator = DefaultItemAnimator()
+        //val itemAnimator = DefaultItemAnimator()
         //itemAnimator.setRemoveDuration(10);
         //itemAnimator.setAddDuration(80);
-        mRecyclerView!!.itemAnimator = itemAnimator
+        mRecyclerView.itemAnimator = DefaultItemAnimator()
         //disableEdgeEffect(mRecyclerView);
     }
 
@@ -235,15 +248,17 @@ class MainActivity : Activity() {
         }
         return super.onOptionsItemSelected(item)
     }
-
+    /*
     var mItemClickListener: MyItemClickListener = object : MyItemClickListener {
         override fun onListItemClicked(view: View?) {
             val itemAdapterPosition = mRecyclerView!!.getChildAdapterPosition(view!!)
             if (itemAdapterPosition == RecyclerView.NO_POSITION) {
                 return
             }
+            val adapter = (mRecyclerView!!.adapter) as CustomAdapter
             if (mDemoAnimAdd) {
-                for (c in 0..0) mAdapter!!.addItemAtPosition(itemAdapterPosition)
+
+                for (c in 0..0) adapter!!.addItemAtPosition(itemAdapterPosition)
                 //mAdapter.addItemAtPosition(itemAdapterPosition);
 
             } else {
@@ -254,6 +269,7 @@ class MainActivity : Activity() {
             }
         }
     }
+     */
 
     internal inner class FlyAnimator : SimpleItemAnimator() {
         var removeHolders: MutableList<RecyclerView.ViewHolder> = ArrayList()
