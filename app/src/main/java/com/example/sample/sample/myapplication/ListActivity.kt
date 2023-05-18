@@ -23,8 +23,7 @@ class ListActivity : Activity() {
         val listView = findViewById<SpringListView>(R.id.listview)
         //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
         //        android.R.layout.simple_list_item_1, android.R.id.text1, values);
-        val adapter = MyAdapter(this, values)
-        listView.adapter = adapter
+        listView.adapter = MyAdapter(this, values)
         listView.setEdgeEffectFactory(mSpringLayout.createViewEdgeEffectFactory())
         listView.onItemClickListener = OnItemClickListener { adapterView, view, i, l ->
             val toast = Toast.makeText(this@ListActivity, "click item $i", Toast.LENGTH_SHORT)
