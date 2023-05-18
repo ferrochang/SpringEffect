@@ -22,23 +22,23 @@ class PullToRefreshScrollViewActivity2 : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.pull_to_refresh_scrollview2)
-        var mRefreshLayout = findViewById<View>(R.id.swipe_container) as SpringRefreshLayout
-        var mSpringLayout = findViewById<View>(R.id.spring_layout) as SpringRelativeLayout
-        var mScrollView = findViewById<View>(R.id.scrollview) as SpringScrollView
-        mSpringLayout!!.addSpringView(R.id.scrollview)
+        val mRefreshLayout = findViewById<View>(R.id.swipe_container) as SpringRefreshLayout
+        val mSpringLayout = findViewById<View>(R.id.spring_layout) as SpringRelativeLayout
+        val mScrollView = findViewById<View>(R.id.scrollview) as SpringScrollView
+        mSpringLayout.addSpringView(R.id.scrollview)
         val scrollView = findViewById<View>(R.id.scrollview) as SpringScrollView
         scrollView.setEdgeEffectFactory(mSpringLayout!!.createViewEdgeEffectFactory())
         //scrollView.setOverScrollNested(true);
-        mRefreshLayout!!.setOverScrollChild(scrollView)
+        mRefreshLayout.setOverScrollChild(scrollView)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             scrollView.setEdgeEffectColor(0x00D6D9D6)
         }
-        mRefreshLayout!!.setOnRefreshListener {
-            mRefreshLayout!!.isRefreshing = true
+        mRefreshLayout.setOnRefreshListener {
+            mRefreshLayout.isRefreshing = true
             Log.d("SpringScrollView", "onRefresh")
             CoroutineScope(Dispatchers.Main).launch {
                 delay(1000)
-                mRefreshLayout!!.isRefreshing = false
+                mRefreshLayout.isRefreshing = false
             }
             //Handler().postDelayed({ mRefreshLayout!!.isRefreshing = false }, 300)
         }
@@ -48,11 +48,11 @@ class PullToRefreshScrollViewActivity2 : Activity() {
             }
 
             override fun onAllowed(i: Int) {
-                mRefreshLayout!!.isEnabled = false
+                mRefreshLayout.isEnabled = false
             }
 
             override fun onStop(i: Int) {
-                mRefreshLayout!!.isEnabled = true
+                mRefreshLayout.isEnabled = true
             }
         })
     }

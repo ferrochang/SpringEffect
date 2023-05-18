@@ -14,7 +14,7 @@ class SpringRecyclerActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.spring_recyclerview)
-        var mRecyclerView : SpringRecyclerView = findViewById(R.id.recyclerView)
+        val mRecyclerView : SpringRecyclerView = findViewById(R.id.recyclerView)
         //initDataset()
         //mAdapter = CustomAdapter(mDataset)
 

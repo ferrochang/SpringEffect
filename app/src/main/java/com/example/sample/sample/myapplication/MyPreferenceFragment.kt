@@ -53,7 +53,7 @@ class MyPreferenceFragment : PreferenceFragmentCompat() {
     override fun onCreateAdapter(preferenceScreen: PreferenceScreen): RecyclerView.Adapter<*> {
         //RecyclerView.Adapter adapter = super.onCreateAdapter(preferenceScreen);
         val mTestingCategory = preferenceScreen.getPreference(0) as PreferenceCategory
-        val testingPrefAdd = mTestingCategory!!.getPreference(0)
+        val testingPrefAdd = mTestingCategory.getPreference(0)
         var mList = ArrayList<Preference>()
         testingPrefAdd.onPreferenceClickListener =
             Preference.OnPreferenceClickListener { preference ->
@@ -66,7 +66,7 @@ class MyPreferenceFragment : PreferenceFragmentCompat() {
                 keyIndex++
                 false
             }
-        val testingPrefDel = mTestingCategory!!.getPreference(1)
+        val testingPrefDel = mTestingCategory.getPreference(1)
         testingPrefDel.onPreferenceClickListener = Preference.OnPreferenceClickListener {
             if (mList.isNotEmpty()) {
                 val candidateIndex = (Math.random() * (mList.size - 1)).toInt()

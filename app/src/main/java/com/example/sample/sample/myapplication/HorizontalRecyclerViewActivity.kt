@@ -18,11 +18,11 @@ class HorizontalRecyclerViewActivity : Activity() {
 
         //mSpringLayout = (SpringRelativeLayout) findViewById(R.id.spring_layout);
         //mSpringLayout.addSpringView(R.id.recyclerView);
-        var mRecyclerView = findViewById<View>(R.id.recyclerView) as SpringRecyclerView
-        var mLayoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        mRecyclerView.layoutManager = mLayoutManager
-        var mAdapter = CustomAdapter(Array<String?>(DATASET_COUNT) { "This is element #$it" })
-        mAdapter!!.setHorizontal()
+        val mRecyclerView = findViewById<View>(R.id.recyclerView) as SpringRecyclerView
+        //var mLayoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        mRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        val mAdapter = CustomAdapter(Array<String?>(DATASET_COUNT) { "This is element #$it" })
+        mAdapter.setHorizontal()
         mRecyclerView.setHorizontalOverScroll()
         mRecyclerView.adapter = mAdapter
         //mRecyclerView.setEdgeEffectFactory(mSpringLayout.createEdgeEffectFactory(true));

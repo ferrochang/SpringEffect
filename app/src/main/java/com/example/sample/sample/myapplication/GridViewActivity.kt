@@ -16,8 +16,8 @@ class GridViewActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.gridview_layout)
-        var mSpringLayout = findViewById<View>(R.id.spring_layout) as SpringRelativeLayout
-        mSpringLayout!!.addSpringView(R.id.gridview)
+        val mSpringLayout = findViewById<View>(R.id.spring_layout) as SpringRelativeLayout
+        mSpringLayout.addSpringView(R.id.gridview)
         val gridView = findViewById<SpringGridView>(R.id.gridview)
         //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
         //        android.R.layout.simple_list_item_1, android.R.id.text1, values);
