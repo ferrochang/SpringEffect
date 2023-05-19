@@ -3,6 +3,8 @@ package com.example.sample.sample.myapplication
 import android.app.Activity
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
 import com.example.lib.effect.effect.widget.SpringRecyclerView
@@ -14,7 +16,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class PullToRefreshRecyclerViewActivity : Activity() {
+class PullToRefreshRecyclerViewActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.pull_refresh_recyclerview)
@@ -31,10 +33,16 @@ class PullToRefreshRecyclerViewActivity : Activity() {
         mRefreshLayout.setOnRefreshListener(OnRefreshListener {
             mRefreshLayout.isRefreshing = true
 
+            lifecycleScope.launch {
+                delay(1000)
+                mRefreshLayout.isRefreshing = false
+            }
+            /*
             CoroutineScope(Dispatchers.Main).launch {
                 delay(1000)
                 mRefreshLayout.isRefreshing = false
             }
+             */
             //Handler().postDelayed({ mRefreshLayout.setRefreshing(false) }, 300)
         })
     }

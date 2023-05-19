@@ -46,6 +46,7 @@
         </activity>
         <activity android:name="com.example.sample.sample.myapplication.PullToRefreshActivity"
             android:label="PullToRefresh"
+            android:theme="@style/Theme.AppCompat.NoActionBar"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -60,6 +61,7 @@
         </activity>
         <activity android:name="com.example.sample.sample.myapplication.PullToRefreshScrollViewActivity"
             android:label="PullToRefreshScrollView"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -67,6 +69,7 @@
         </activity>
         <activity android:name="com.example.sample.sample.myapplication.PullToRefreshScrollViewActivity2"
             android:label="PullToRefreshScrollView2"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -74,6 +77,7 @@
         </activity>
         <activity android:name="com.example.sample.sample.myapplication.RefreshScrollViewActivity"
             android:label="RefreshScrollView w/o SpringRelatvieLayout"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -89,6 +93,7 @@
         </activity>
         <activity android:name="com.example.sample.sample.myapplication.PullToRefreshRecyclerViewActivity"
             android:label="PullToRefreshRecyclerView"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

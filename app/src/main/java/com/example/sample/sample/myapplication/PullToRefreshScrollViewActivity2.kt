@@ -1,10 +1,11 @@
 package com.example.sample.sample.myapplication
 
-import android.app.Activity
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.example.lib.effect.effect.widget.SpringRefreshLayout
 import com.example.lib.effect.effect.widget.SpringRelativeLayout
 import com.example.lib.effect.effect.widget.SpringScrollView
@@ -15,7 +16,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class PullToRefreshScrollViewActivity2 : Activity() {
+class PullToRefreshScrollViewActivity2 : AppCompatActivity() {
     //var mSpringLayout: SpringRelativeLayout? = null
     //var mRefreshLayout: SpringRefreshLayout? = null
     //var mScrollView: SpringScrollView? = null
@@ -35,10 +36,17 @@ class PullToRefreshScrollViewActivity2 : Activity() {
         mRefreshLayout.setOnRefreshListener {
             mRefreshLayout.isRefreshing = true
             Log.d("SpringScrollView", "onRefresh")
+
+            lifecycleScope.launch {
+                delay(1000)
+                mRefreshLayout.isRefreshing = false
+            }
+            /*
             CoroutineScope(Dispatchers.Main).launch {
                 delay(1000)
                 mRefreshLayout.isRefreshing = false
             }
+             */
             //Handler().postDelayed({ mRefreshLayout!!.isRefreshing = false }, 300)
         }
         scrollView.setScrollingChangeListener(object : scrollingChangeListener {

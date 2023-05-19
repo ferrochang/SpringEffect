@@ -1,10 +1,11 @@
 package com.example.sample.sample.myapplication
 
-import android.app.Activity
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
 import com.example.lib.effect.effect.widget.SpringScrollView2
@@ -17,7 +18,7 @@ import kotlinx.coroutines.launch
 /**
  * PulltoRefresh without SpringRelativeLayout
  */
-class RefreshScrollViewActivity : Activity() {
+class RefreshScrollViewActivity : AppCompatActivity() {
     //var mRefreshLayout: SwipeRefreshLayout? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +34,14 @@ class RefreshScrollViewActivity : Activity() {
             Log.d("Ferro", "onRefresh ${Thread.currentThread()}")
             //Handler().postDelayed({ mRefreshLayout.setRefreshing(false) }, 300)
 
+            lifecycleScope.launch {
+                delay(1000)
+
+                mRefreshLayout.isRefreshing = false
+
+                android.util.Log.d("Ferro", "Thread: ${Thread.currentThread()}")
+            }
+            /*
             CoroutineScope(Dispatchers.Main).launch {
                 delay(1000)
 
@@ -40,6 +49,8 @@ class RefreshScrollViewActivity : Activity() {
 
                 android.util.Log.d("Ferro", "Thread: ${Thread.currentThread()}")
             }
+
+             */
 
             //Log.d("Ferro", "after that ${Thread.currentThread()}")
 
