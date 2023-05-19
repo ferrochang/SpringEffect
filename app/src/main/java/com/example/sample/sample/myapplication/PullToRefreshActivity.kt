@@ -1,6 +1,5 @@
 package com.example.sample.sample.myapplication
 
-import android.app.Activity
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -8,6 +7,8 @@ import android.view.View
 import android.widget.AdapterView.OnItemClickListener
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.lib.effect.effect.widget.SpringListView
 import com.example.lib.effect.effect.widget.SpringRelativeLayout
@@ -18,7 +19,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class PullToRefreshActivity : Activity() {
+class PullToRefreshActivity : AppCompatActivity() {
     //var mSpringLayout: SpringRelativeLayout? = null
     //var mRefreshLayout: SwipeRefreshLayout? = null
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,10 +56,17 @@ class PullToRefreshActivity : Activity() {
         mRefreshLayout.setOnRefreshListener {
             mRefreshLayout.isRefreshing = true
 
+            lifecycleScope.launch {
+                delay(1000)
+                mRefreshLayout.isRefreshing = false
+            }
+            /*
             CoroutineScope(Dispatchers.Main).launch {
                 delay(1000)
                 mRefreshLayout.isRefreshing = false
             }
+
+             */
             //Handler().postDelayed({ mRefreshLayout!!.isRefreshing = false }, 300)
         }
     }
