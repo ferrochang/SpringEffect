@@ -3,8 +3,6 @@ package com.example.sample.sample.myapplication
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ObjectAnimator
-import android.app.Activity
-import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -15,23 +13,25 @@ import android.view.View
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import android.view.animation.Animation.AnimationListener
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.commit
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.example.lib.effect.effect.widget.SpringRelativeLayout
+import com.example.sample.myapplication.ListFragment
+import com.example.sample.myapplication.MainFragment
 import com.example.sample.myapplication.R
 import com.example.sample.sample.view.CustomAdapter
 import com.example.sample.sample.view.DefaultItemAnimator
 import com.example.sample.sample.view.MyItemClickListener
 
-class MainActivity : Activity() {
+class MainActivity : AppCompatActivity() {
 
     private var mDemoAnimAdd = true
     //private var mSpringLayoutList: ArrayList<ViewGroup>? = ArrayList()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        //initDataset()
         /*
         for (g in mSpringLayoutList!!) {
             mSpringLayoutList!!.size
@@ -42,56 +42,7 @@ class MainActivity : Activity() {
         mSpringLayoutList = null
 
          */
-        val mSpringLayout = findViewById<View>(R.id.spring_layout) as SpringRelativeLayout
-        mSpringLayout.addSpringView(R.id.recyclerView)
-        val mRecyclerView = findViewById<View>(R.id.recyclerView) as RecyclerView
-        //mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        //var mLayoutManager = LinearLayoutManager(this)
-        mRecyclerView.layoutManager = LinearLayoutManager(this)
-        //mAdapter = CustomAdapter(mDataset, mItemClickListener)
-        //mAdapter = CustomAdapter(Array<String?>(DATASET_COUNT) { "This is element #$it" }, mItemClickListener)
 
-        mRecyclerView.adapter = CustomAdapter(Array<String?>(DATASET_COUNT) { "This is element #$it" }, object : MyItemClickListener {
-            override fun onListItemClicked(view: View?) {
-                val itemAdapterPosition = mRecyclerView.getChildAdapterPosition(view!!)
-                if (itemAdapterPosition == RecyclerView.NO_POSITION) {
-                    return
-                }
-                val adapter = (mRecyclerView.adapter) as CustomAdapter
-                if (mDemoAnimAdd) {
-                    for (c in 0..0) adapter.addItemAtPosition(itemAdapterPosition)
-                } else {
-                    adapter.removeItemAtPosition(itemAdapterPosition)
-                }
-            }
-
-        })
-        //mRecyclerView.adapter = mAdapter
-        mRecyclerView.edgeEffectFactory = mSpringLayout.createEdgeEffectFactory()
-        mRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            var state = RecyclerView.SCROLL_STATE_IDLE
-            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                //super.onScrollStateChanged(recyclerView, newState);
-                state = newState
-            }
-
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                if (state == RecyclerView.SCROLL_STATE_DRAGGING && dy != 0) {
-                    //mSpringLayout.onRecyclerViewScrolled();
-                }
-
-                //super.onScrolled(recyclerView, dx, dy);
-            }
-        })
-        //val itemAnimator = DefaultItemAnimator()
-        //itemAnimator.setRemoveDuration(10);
-        //itemAnimator.setAddDuration(80);
-        mRecyclerView.itemAnimator = DefaultItemAnimator()
-        //disableEdgeEffect(mRecyclerView);
-    }
-
-    override fun onResume() {
-        super.onResume()
     }
 
     /*
@@ -247,6 +198,7 @@ class MainActivity : Activity() {
         }
         return super.onOptionsItemSelected(item)
     }
+
     /*
     var mItemClickListener: MyItemClickListener = object : MyItemClickListener {
         override fun onListItemClicked(view: View?) {
@@ -411,6 +363,7 @@ class MainActivity : Activity() {
         }
     }
 
+    /*
     var builder: AlertDialog.Builder? = null
     fun createDialog() {
         builder = AlertDialog.Builder(this)
@@ -427,7 +380,6 @@ class MainActivity : Activity() {
         builder!!.show()
     }
 
-    companion object {
-        private const val DATASET_COUNT = 12
-    }
+     */
+
 }

@@ -1,6 +1,5 @@
 package com.example.sample.sample.myapplication
 
-import android.app.Activity
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -11,8 +10,6 @@ import com.example.lib.effect.effect.widget.SpringRecyclerView
 import com.example.lib.effect.effect.widget.SpringRefreshLayout
 import com.example.sample.myapplication.R
 import com.example.sample.sample.view.CustomAdapter
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 

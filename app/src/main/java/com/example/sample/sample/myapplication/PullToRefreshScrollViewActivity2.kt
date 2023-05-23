@@ -11,8 +11,6 @@ import com.example.lib.effect.effect.widget.SpringRelativeLayout
 import com.example.lib.effect.effect.widget.SpringScrollView
 import com.example.lib.effect.effect.widget.SpringScrollView.scrollingChangeListener
 import com.example.sample.myapplication.R
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
