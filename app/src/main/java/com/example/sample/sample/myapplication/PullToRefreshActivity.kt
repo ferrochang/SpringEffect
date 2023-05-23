@@ -18,7 +18,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class PullToRefreshActivity : AppCompatActivity() {
-    val TAG = localClassName
     //var mSpringLayout: SpringRelativeLayout? = null
     //var mRefreshLayout: SwipeRefreshLayout? = null
     override fun onCreate(savedInstanceState: Bundle?) {
