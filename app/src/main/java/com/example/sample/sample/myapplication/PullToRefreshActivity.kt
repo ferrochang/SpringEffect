@@ -14,12 +14,11 @@ import com.example.lib.effect.effect.widget.SpringListView
 import com.example.lib.effect.effect.widget.SpringRelativeLayout
 import com.example.sample.myapplication.R
 import com.example.sample.sample.view.MyAdapter
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class PullToRefreshActivity : AppCompatActivity() {
+    val TAG = localClassName
     //var mSpringLayout: SpringRelativeLayout? = null
     //var mRefreshLayout: SwipeRefreshLayout? = null
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,7 +64,6 @@ class PullToRefreshActivity : AppCompatActivity() {
                 delay(1000)
                 mRefreshLayout.isRefreshing = false
             }
-
              */
             //Handler().postDelayed({ mRefreshLayout!!.isRefreshing = false }, 300)
         }
